@@ -1,0 +1,356 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [36.6833, -3.3667]
+      },
+      "properties": {
+        "type": "site",
+        "day": 1,
+        "title": "יום 1: נחיתה בטנזניה והתארגנות בארושה",
+        "distance": "55 ק\"מ (נסיעה משדה התעופה)",
+        "duration": "שעה וחצי נסיעה",
+        "elevation": "גובה: 1,400 מטר מעל פני הים",
+        "description": "נחיתה בשדה התעופה קילמנג'רו (JRO), העברה למלון בארושה והתארגנות לקראת היציאה לשטח. מפגש היכרות ותדרוך על המסלול.",
+        "link": "https://en.wikipedia.org/wiki/Arusha",
+        "link_text": "🌐 מידע גיאוגרפי והיסטורי על ארושה (Wikipedia)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [36.6833, -3.3667],
+          [38.0833, -4.0500]
+        ]
+      },
+      "properties": {
+        "type": "track",
+        "day": 2,
+        "title": "יום 2: ספארי בשמורת מקומאזי (Mkomazi) והמשך להרי האוסאמבארה",
+        "distance": "140 ק\"מ נסיעה + ספארי",
+        "duration": "כ-4 שעות נסיעה + 3 שעות ספארי",
+        "elevation": "עליה מ-1,400 מ' ל-1,600 מ' ברכב",
+        "description": "ספארי בשמורה הבתולית על רקע פסגת הקילימנג'רו לצפייה בפילים, קרנפים שחורים וטורפים. אחר הצהריים נמשיך בנסיעה ונעלה אל רכס הרי האוסאמבארה.",
+        "link": "https://tanzania-specialist.com/national-parks/mkomazi-national-park/",
+        "link_text": "🐾 מידע רשמי ומדריך חיות בר לשמורת מקומאזי"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [38.0833, -4.0500]
+      },
+      "properties": {
+        "type": "site",
+        "day": 2,
+        "title": "יום 2: הגעה לחווה חקלאית פסטורלית (Lushoto)",
+        "distance": "הגעה לנקודת הלינה",
+        "duration": "0 שעות הליכה",
+        "elevation": "גובה: 1,600 מטר",
+        "description": "לקראת ערב נגיע למקום הלינה בחווה ירוקה ופסטורלית בלב הטבע להתארגנות לקראת תחילת המקטעים הרגליים.",
+        "link": "https://www.exploretanzania.nl/en/properties/mullers-mountain-lodge/",
+        "link_text": "🏡 פרטים ותמונות מחוות Müller's Mountain Lodge"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [38.0833, -4.0500],
+          [38.2144, -4.6125]
+        ]
+      },
+      "properties": {
+        "type": "track",
+        "day": 3,
+        "title": "יום 3: טרק למפלי Kidhege ולינה ב-Mambo View Point",
+        "distance": "18 ק\"מ הליכה",
+        "duration": "5–6 שעות הליכה נטו",
+        "elevation": "עלייה מצטברת: 750 מטר (שיא גובה: 1,950 מ')",
+        "description": "הליכה בין שרכי ענק ועצי בראשית אל מפלי Kidhege בלב הג'ונגל. תצפיות על קופי קולובוס בשולי היער. סיום בעלייה חדה אל המצוק הגבוה.",
+        "link": "https://tanzania-specialist.com/accommodation/mambo-view-point-eco-lodge/",
+        "link_text": "🌊 מידע על מסלולי הליכה סביב מפלי האוסאמבארה"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [38.2144, -4.6125]
+      },
+      "properties": {
+        "type": "site",
+        "day": 3,
+        "title": "יום 3: לינה ב-Mambo View Point Eco Lodge",
+        "distance": "סיום מקטע הליכה",
+        "duration": "הגעה אחה\"צ",
+        "elevation": "גובה: 1,950 מטר",
+        "description": "התמקמות במתחם האקולוגי הייחודי Mambo View Point השוכן על שפת מצוק אדיר ומספק תצפיות פנורמיות מרהיבות לעבר העמקים והסוואנה.",
+        "link": "https://plcnetwork.co.za/member/116/Mambo-View-Point-Eco-Lodge/",
+        "link_text": "⛰️ אתר הבית של Mambo View Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [38.2144, -4.6125],
+          [38.3794, -4.7556]
+        ]
+      },
+      "properties": {
+        "type": "track",
+        "day": 4,
+        "title": "יום 4: ממומבו ויו פוינט אל מנזר רנגווי (Rangwi Convent)",
+        "distance": "13.5 ק\"מ הליכה",
+        "duration": "4–5 שעות הליכה",
+        "elevation": "עלייה: 460 מטר, ירידה: 380 מטר",
+        "description": "הליכה לאורך וואדיות וכפרים הרריים. פגישה עם מקומיים בדרכם לשווקים ולבתי הספר. חיפוש אחר זיקית האוסאמבארה בעלת שלוש הקרניים.",
+        "link": "https://en.wikipedia.org/wiki/Usambara_Mountains",
+        "link_text": "🦎 מדריך הטבע והמגוון הביולוגי של רכס האוסאמבארה"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [38.3794, -4.7556]
+      },
+      "properties": {
+        "type": "site",
+        "day": 4,
+        "title": "יום 4: לינה במנזר Rangwi Convent",
+        "distance": "סיום מקטע הליכה",
+        "duration": "הגעה לקראת ערב",
+        "elevation": "גובה: 1,720 מטר",
+        "description": "אירוח ולינה חווייתית במנזר רנגווי הצנוע וההיסטורי, המספק הצצה לחיי הנזירות המקומית והשקעות פיתוח חקלאיות באזור.",
+        "link": "http://www.africanparaiso.com/accommodation/rangwi-convent-guesthouse/",
+        "link_text": "⛪ פרטי אירוח ומדריך לינה במנזר רנגווי"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [38.3794, -4.7556],
+          [38.2833, -4.8000]
+        ]
+      },
+      "properties": {
+        "type": "track",
+        "day": 5,
+        "title": "יום 5: צעידה בין חלקות חקלאיות ומסעדה כפרית",
+        "distance": "12 ק\"מ הליכה",
+        "duration": "4 שעות הליכה",
+        "elevation": "עלייה: 400 מטר, ירידה: 300 מטר",
+        "description": "הליכה בין טרסות חקלאיות מסורתיות בהרים. עצירה לארוחת צהריים אותנטית במסעדה כפרית מקומית ושיחות עם חקלאי האזור.",
+        "link": "https://en.planetofhotels.com/tanzania/lushoto/jua-zuri",
+        "link_text": "🍲 סקירה תרבותית על חקלאות ומזון הררי בטנזניה"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [38.2833, -4.8000]
+      },
+      "properties": {
+        "type": "site",
+        "day": 5,
+        "title": "יום 5: לינה באזור כפרי באוסאמבארה (Lushoto Highlands)",
+        "distance": "הגעה בסוף מקטע ההליכה",
+        "duration": "אחר הצהריים",
+        "elevation": "גובה: 1,650 מטר",
+        "description": "הגעה למקום הלינה כפרי בסיום הצעידה. מנוחה, ארוחת ערב חמה ממוצרים מקומיים שנשלו מהשדות הסמוכים והתארגנות ליום המחרת.",
+        "link": "https://www.exploretanzania.nl/en/properties/mullers-mountain-lodge/",
+        "link_text": "🏡 פרטי לינה ובקתות הרים באזור לושוטו"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [38.2833, -4.8000],
+          [38.2917, -4.8500]
+        ]
+      },
+      "properties": {
+        "type": "track",
+        "day": 6,
+        "title": "יום 6: מעבר ביער קדום וביקור בשוק המקומי הישן",
+        "distance": "19 ק\"מ הליכה",
+        "duration": "6–7 שעות הליכה (ניתן לקצר)",
+        "elevation": "עלייה: 800 מטר, ירידה: 650 מטר",
+        "description": "יום הליכה מאתגר דרך שמורת יער גשם קדמונית, המלאה בצמחייה אנדמית. ביקור בשוק שבועי צבעוני. הגעה ללודג' הררי בסיום המסלול.",
+        "link": "https://www.exploretanzania.nl/en/properties/mullers-mountain-lodge/",
+        "link_text": "🌿 מידע על שמורות יערות הגשם הקדומים באוסאמבארה"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [38.2917, -4.8500]
+      },
+      "properties": {
+        "type": "site",
+        "day": 6,
+        "title": "יום 6: לינה בלודג' הררי מפנק (Müller's Mountain Lodge)",
+        "distance": "הגעה בסוף מסלול הליכה ארוך",
+        "duration": "הגעה לקראת ערב",
+        "elevation": "גובה: 1,700 מטר",
+        "description": "לינה והתרעננות ב-Müller's Mountain Lodge בלב אזור מיוער ושקט. מקום מושלם להרפיית השרירים אחרי הצעידה הארוכה ביותר בטרק.",
+        "link": "https://www.exploretanzania.nl/en/properties/mullers-mountain-lodge/",
+        "link_text": "🏡 אתר המידע והזמנות ל-Müller's Mountain Lodge"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [38.2917, -4.8500],
+          [38.2944, -4.7828]
+        ]
+      },
+      "properties": {
+        "type": "track",
+        "day": 7,
+        "title": "יום 7: מהג'ונגל אל עיר הבירה המלכותית לושוטו (Lushoto)",
+        "distance": "15 ק\"מ הליכה",
+        "duration": "5 שעות הליכה",
+        "elevation": "ירידה מצטברת: 400 מטר",
+        "description": "צעידה במעבה הג'ונגל תחת חופת עצים ענקית המגנה מפני השמש, ויציאה לקו הרכס המשקיף לעבר לושוטו - בירת הרכס המרכזית (1,400 מ').",
+        "link": "https://www.bedandbreakfast.eu/en/a/bPT4mmz0dMF1/jua-zuri",
+        "link_text": "🏡 פרטי לינה ויצירת קשר עם Jua Zuri Homestay"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [38.2944, -4.7828]
+      },
+      "properties": {
+        "type": "site",
+        "day": 7,
+        "title": "יום 7: לינה בעיר המחוז לושוטו (Jua Zuri Home)",
+        "distance": "הגעה בסיום מקטע הג'ונגל",
+        "duration": "אחר הצהריים",
+        "elevation": "גובה: 1,400 מטר",
+        "description": "הגעה ללושוטו, עיר הבירה התרבותית של הרי האוסאמבארה. התמקמות בבית ההארחה האותנטי Jua Zuri Home, מנוחה וזמן סיור בעיירה הקולוניאלית ההיסטורית.",
+        "link": "https://www.bedandbreakfast.eu/en/a/bPT4mmz0dMF1/jua-zuri",
+        "link_text": "🏡 סקירה ותמונות מבית ההארחה Jua Zuri בלושוטו"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [38.2944, -4.7828],
+          [39.0620, -5.0920]
+        ]
+      },
+      "properties": {
+        "type": "track",
+        "day": 8,
+        "title": "יום 8: ירידה מהרי האוסאמבארה אל חוף טאנגה ולינה ב-Villa Matalai",
+        "distance": "115 ק\"מ נסיעה",
+        "duration": "כ-3 שעות נסיעה",
+        "elevation": "ירידה חדה מגובה 1,400 מ' לגובה פני הים (0 מ')",
+        "description": "נפרדים מאוויר ההרים ויורדים בנסיעה אל רצועת החוף של עיר הנמל טאנגה. הגעה והתמקמות בלודג' האירוח האקסקלוסיבי Villa Matalai השוכן על קו המים.",
+        "link": "https://www.booking.com/hotel/tz/villa-matalai.he.html",
+        "link_text": "🏨 לחץ לצפייה ב-Villa Matalai בחוף טאנגה (Booking)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [39.0620, -5.0920]
+      },
+      "properties": {
+        "type": "site",
+        "day": 8,
+        "title": "יום 8 & 9: לינה במלון Villa Matalai - חוף טאנגה",
+        "distance": "סיום הטרק ההררי",
+        "duration": "הגעה אחה\"צ והתמקמות",
+        "elevation": "גובה: פני הים (0 מ')",
+        "description": "מתחם אירוח יפהפה על חוף האוקיינוס ההודי בטאנגה. הלינה בימים 8 ו-9 מתוכננת כאן כדי לאפשר מנוחה מוחלטת, שחייה בבריכה, וארוחות טרופיות מעולות מול קו המים בסגנון סוואהילי.",
+        "link": "https://www.booking.com/hotel/tz/villa-matalai.he.html",
+        "link_text": "🏖️ פרטי החדרים והזמנות ל-Villa Matalai (Booking)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [39.0620, -5.0920],
+          [39.1000, -5.0667]
+        ]
+      },
+      "properties": {
+        "type": "track",
+        "day": 9,
+        "title": "יום 9: סיור בעיר הנמל טאנגה וחזרה ללינה ב-Villa Matalai",
+        "distance": "20 ק\"מ תנועה מקומית",
+        "duration": "יום סיור ותרבות מלא",
+        "elevation": "0 מטרים (קו החוף)",
+        "description": "ביקור באתריה ההיסטוריים של טאנגה, סיור בין המבנים הקולוניאליים הישנים והשווקים של עיר החוף, וחזרה לקראת ערב ללינה שנייה בבקתות של Villa Matalai.",
+        "link": "https://en.wikipedia.org/wiki/Tanga,_Tanzania",
+        "link_text": "⚓ רקע היסטורי וארכיטקטורה קולוניאלית בטנגה (Wikipedia)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [39.3622, -5.7331]
+      },
+      "properties": {
+        "type": "site",
+        "day": 10,
+        "title": "יום 10: מעבר אל החופים הלבנים של זנזיבר (Nungwi)",
+        "distance": "חציית מצר זנזיבר (הפלגה/טיסה)",
+        "duration": "יום נופש ופעילות מלא",
+        "elevation": "גובה: פני הים (0 מ')",
+        "description": "מעבר ימי מטאנגה אל האי זנזיבר והמשך לחופים הצפוניים של נונגווי. זמן למנוחה, צפייה בתופעת הגאות והשפל הקיצונית או שנורקלינג במים הצלולים.",
+        "link": "https://en.wikipedia.org/wiki/Nungwi",
+        "link_text": "🏝️ מדריך חופים ופעילויות ימיות בנונגווי (Wikipedia)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [39.1979, -6.1659],
+          [36.6833, -3.3667]
+        ]
+      },
+      "properties": {
+        "type": "track",
+        "day": 11,
+        "title": "יום 11: פרידה מזנזיבר וחזרה לישראל",
+        "distance": "טיסות בינלאומיות",
+        "duration": "מעבר שדות תעופה",
+        "elevation": "טיסה חזרה",
+        "description": "בוקר אחרון של רגיעה מול מי הטורקיז, העברה לשדה התעופה של זנזיבר וטיסה חזרה לישראל לסיום המסע המרתק.",
+        "link": "https://en.wikipedia.org/wiki/Abeid_Amani_Karume_International_Airport",
+        "link_text": "✈️ מידע על שדה התעופה הבינלאומי בזנזיבר (Zanzibar Airport)"
+      }
+    }
+  ]
+}
