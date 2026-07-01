@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>מסלול טיול אינטראקטיבי - טנזניה</title>
-
+    
     <!-- טעינת ה-CSS של Leaflet מהרשת -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
+    
     <style>
         body {
             margin: 0;
@@ -16,54 +15,77 @@
             font-family: Arial, sans-serif;
             display: flex;
             height: 100vh;
+            overflow: hidden;
         }
-
+        
+        /* ברירת מחדל למחשב - המפה משמאל, הפאנל מימין */
         #map {
             flex: 1;
             height: 100%;
+            z-index: 1;
         }
-
         #info-panel {
-            width: 350px;
+            width: 380px;
             background-color: #f8f9fa;
             border-right: 2px solid #dee2e6;
             padding: 20px;
             box-sizing: border-box;
             overflow-y: auto;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            z-index: 2;
         }
+        
+        h2 { color: #2c3e50; margin-top: 0; font-size: 20px; }
+        .meta-info { font-weight: bold; color: #7f8c8d; margin-bottom: 8px; }
+        .desc { line-height: 1.5; color: #34495e; font-size: 14px; }
+        .placeholder { color: #bdc3c7; font-style: italic; text-align: center; margin-top: 40%; }
 
-        h2 {
-            color: #2c3e50;
-            margin-top: 0;
-        }
-
-        .meta-info {
-            font-weight: bold;
-            color: #7f8c8d;
-            margin-bottom: 15px;
-        }
-
-        .desc {
-            line-height: 1.6;
-            color: #34495e;
-        }
-
-        .placeholder {
-            color: #bdc3c7;
-            font-style: italic;
-            text-align: center;
-            margin-top: 50%;
+        /* ======================================================= */
+        /* עיצוב מיוחד לטלפונים ניידים ומסכים קטנים (Responsive) */
+        /* ======================================================= */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column; /* סידור האלמנטים מלמעלה למטה */
+            }
+            #map {
+                width: 100%;
+                height: 100vh; /* המפה תופסת את כל שטח המסך */
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            #info-panel {
+                width: 92%;
+                max-height: 35vh; /* הפאנל יוגבל למקסימום 35% מגובה המסך בנייד */
+                position: absolute;
+                bottom: 15px; /* הצפה מעט מעל תחתית המסך */
+                left: 4%;
+                right: 4%;
+                border-right: none;
+                border-radius: 12px; /* פינות מעוגלות מודרניות */
+                box-shadow: 0 -4px 15px rgba(0,0,0,0.2); /* צל עמוק יותר להפרדה מהמפה */
+                padding: 15px;
+                background-color: rgba(248, 249, 250, 0.95); /* שקיפות קלה לקצוות */
+                backdrop-filter: blur(5px); /* אפקט זכוכית מטושטשת ברקע */
+                z-index: 1000; /* הבטחה שהפאנל יצוף מעל המפה */
+                transition: all 0.3s ease; /* אנימציה חלקה בעדכון המידע */
+            }
+            .placeholder {
+                margin-top: 5px;
+                font-size: 13px;
+            }
+            h2 { font-size: 17px; margin-bottom: 8px; }
+            .meta-info { font-size: 12px; }
+            .desc { font-size: 13px; margin-bottom: 5px; }
         }
     </style>
 </head>
-
 <body>
 
-    <!-- פאנל המידע הצדדי -->
+    <!-- פאנל המידע הצדדי (במחשב) / התחתון הצף (בנייד) -->
     <div id="info-panel">
         <div id="panel-content">
-            <p class="placeholder">לחץ על אתר או מסלול במפה כדי להציג את פרטי הטיול והמרחק</p>
+            <p class="placeholder">לחץ על יום או אתר במפה להצגת פרטי המסלול והמרחקים</p>
         </div>
     </div>
 
@@ -72,9 +94,7 @@
 
     <!-- טעינת ה-JavaScript של Leaflet מהרשת -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+    <!-- טעינת קוד הלוגיקה -->
     <script src="app.js"></script>
 </body>
-</body>
-
 </html>
