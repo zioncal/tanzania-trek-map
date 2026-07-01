@@ -36,7 +36,7 @@ fetch('safari_path.geojson')
     .then(response => response.json())
     .then(data => {
         
-        // 1. שלב ראשון: ציור המסלולים (Lines) עם מנגנון לחיצה מורחב
+        // 1. שלב ראשון: ציור המסלולים (Lines) עם מנגנון לחיצה מורחב ומדויק
         L.geoJSON(data, {
             filter: function(feature) {
                 return feature.properties.type === 'track';
@@ -49,23 +49,25 @@ fetch('safari_path.geojson')
                 };
             },
             onEachFeature: function(feature, layer) {
-                // יצירת קו שקוף ועבה במיוחד מעל הקו המקורי לצורך לחיצה קלה
+                // יצירת קו רחב במיוחד מעל הקו המקורי לצורך לחיצה קלה בנייד
                 if (layer.getLatLngs) {
                     const originalLatLngs = layer.getLatLngs();
                     
                     const touchCatchLayer = L.polyline(originalLatLngs, {
-                        color: '#transparent',
-                        weight: 24, // טווח רחב במיוחד ללחיצה נוחה עם האצבע
-                        opacity: 0,  // שקוף לחלוטין לגולש
+                        color: '#3498db', // צבע חוקי חובה עבור Leaflet
+                        weight: 25,       // עובי רחב מאוד לתפיסת האצבע בנייד
+                        opacity: 0.01,    // כמעט שקוף לחלוטין, אך קיים עבור הדפדפן ללחיצה
                         interactive: true
                     }).addTo(map);
 
-                    // מאזין לחיצה על השכבה השקופה הרחבה
+                    // מאזין לחיצה על השכבה הרחבה השקופה
                     touchCatchLayer.on('click', function(e) {
                         updatePanel(feature.properties);
-                        // אפקט ויזואלי קטן לקו המקורי כדי שהמשתמש יבין מה הוא סימן
-                        layer.setStyle({ color: '#e74c3c', weight: 4 });
+                        
+                        // אפקט ויזואלי קטן לקו המקורי (הדק) כדי לתת אישור למשתמש
+                        layer.setStyle({ color: '#e74c3c', weight: 5 });
                         setTimeout(() => layer.setStyle({ color: '#3498db', weight: 3 }), 800);
+                        
                         L.DomEvent.stopPropagation(e);
                     });
                 }
