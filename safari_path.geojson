@@ -335,7 +335,7 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-6.162080, 39.188980]
+        "coordinates": [ 39.188980,-6.162080]
       },
       "properties": {
         "type": "site",
