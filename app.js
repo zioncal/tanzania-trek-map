@@ -1,112 +1,219 @@
-// הגדרת המפה ומרכז ראשוני על אזור אוסאמבארה וטאנגה
-const map = L.map('map', {
-    zoomControl: false 
-}).setView([-4.8, 38.6], 8); 
+'use strict';
 
-// הוספת שכבת מפה בסיסית יציבה (OpenStreetMap)
+const DEFAULT_VIEW = [-4.5, 38.5];
+const DEFAULT_ZOOM = 7;
+const TRACK_COLOR = '#1877c9';
+const TRACK_ACTIVE_COLOR = '#e76f35';
+const SITE_COLOR = '#15965d';
+
+const map = L.map('map', {
+  zoomControl: false,
+  tap: true
+}).setView(DEFAULT_VIEW, DEFAULT_ZOOM);
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
+  maxZoom: 19,
+  attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// הוספת בקרת זום בפינה השמאלית העליונה
 L.control.zoom({ position: 'topleft' }).addTo(map);
+L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
 
-// פונקציה אחידה ומאובטחת לעדכון פאנל המידע בעת לחיצה
-function updatePanel(properties) {
-    const contentDiv = document.getElementById('panel-content');
-    
-    let linkHTML = '';
-    if (properties.link && properties.link_text) {
-        linkHTML = `
-            <div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed #2ecc71;">
-                🌐 <a href="${properties.link}" target="_blank" rel="noopener noreferrer" 
-                      style="color: #1abc9c; font-weight: bold; text-decoration: underline; font-size: 13px;">
-                    ${properties.link_text}
-                </a>
-            </div>
-        `;
-    }
+const routeGroup = L.featureGroup().addTo(map);
+let activeTrack = null;
 
-    contentDiv.innerHTML = `
-        <h2>${properties.title || 'מידע על המסלול'}</h2>
-        <div class="meta-info" style="margin-bottom: 6px;">📏 <b>מרחק:</b> ${properties.distance || 'לא צוין'}</div>
-        <div class="meta-info" style="margin-bottom: 6px;">⏱️ <b>זמן משוער:</b> ${properties.duration || 'לא צוין'}</div>
-        <div class="meta-info" style="margin-bottom: 12px;">⛰️ <b>גובה:</b> ${properties.elevation || 'לא צוין'}</div>
-        <p class="desc" style="line-height: 1.6; color: #34495e; margin: 0; text-align: justify;">${properties.description || 'אין תיאור זמין למקטע זה.'}</p>
-        ${linkHTML}
-    `;
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
 }
 
-// טעינת ועיבוד קובץ ה-GeoJSON בלולאה הנדסית מאובטחת
-fetch('safari_path.geojson')
-    .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-    })
-    .then(data => {
-        
-        // ציור ישיר ומובנה של כל הישויות
-        L.geoJSON(data, {
-            // 1. הגדרת סגנון ויזואלי לקווים האמיתיים (הדקים)
-            style: function(feature) {
-                if (feature.properties.type === 'track') {
-                    return { color: '#3498db', weight: 4, opacity: 0.85 };
-                }
-            },
-            // 2. הפיכת נקודות הלינה (Sites) לעיגולים מעוצבים ובולטים
-            pointToLayer: function(feature, latlng) {
-                return L.circleMarker(latlng, {
-                    radius: 10,
-                    fillColor: '#2ecc71',
-                    color: '#ffffff',
-                    weight: 2,
-                    opacity: 1,
-                    fillOpacity: 0.9
-                });
-            },
-            // 3. הצמדת אירועי הלחיצה ומנגנון "כרית המגע" השקופה
-            onEachFeature: function(feature, layer) {
-                const props = feature.properties;
+function safeExternalUrl(value) {
+  if (!value) return '';
 
-                // במידה והאלמנט הוא קו מסלול (Track)
-                if (props.type === 'track' && feature.geometry.type === 'LineString') {
-                    // יצירת קו הגנה שקוף רחב במיוחד ללכידת אצבעות בנייד
-                    const catchLayer = L.polyline(layer.getLatLngs(), {
-                        color: '#3498db',
-                        weight: 26,    // טווח רחב מאוד ללחיצה קלה ללא צורך בדיוק
-                        opacity: 0.01,  // כמעט שקוף לגמרי אך מרונדר בדפדפן
-                        interactive: true
-                    }).addTo(map);
+  try {
+    const url = new URL(value, window.location.href);
+    return ['http:', 'https:'].includes(url.protocol) ? url.href : '';
+  } catch {
+    return '';
+  }
+}
 
-                    catchLayer.on('click', function(e) {
-                        updatePanel(props);
-                        
-                        // אפקט הבהוב קצר כדי לתת אישור ויזואלי לגולש
-                        layer.setStyle({ color: '#e74c3c', weight: 6 });
-                        setTimeout(() => layer.setStyle({ color: '#3498db', weight: 4 }), 700);
-                        
-                        map.fitBounds(layer.getBounds(), { padding: [50, 50] });
-                        L.DomEvent.stopPropagation(e);
-                    });
-                } 
-                // במידה והאלמנט הוא נקודת עניין/לינה (Site)
-                else if (props.type === 'site') {
-                    layer.on('click', function(e) {
-                        updatePanel(props);
-                        
-                        // אפקט הגדלה זמני לנקודה שנלחצה
-                        layer.setRadius(14);
-                        setTimeout(() => layer.setRadius(10), 400);
-                        
-                        map.setView(layer.getLatLng(), 12);
-                        L.DomEvent.stopPropagation(e);
-                    });
-                }
-            }
-        }).addTo(map);
+function buildLinksHtml(properties = {}) {
+  const validLinks = [];
 
-    })
-    .catch(error => {
-        console.error('Error loading GeoJSON:', error);
-        document.getElementById('panel-content').innerHTML = '<p style="color:red; font-weight:bold;">שגיאה בטעינת נתוני המפה בענן.</p>';
+  if (Array.isArray(properties.links)) {
+    properties.links.forEach((item) => {
+      if (!item || typeof item !== 'object') return;
+
+      const url = safeExternalUrl(item.url);
+      if (!url) return;
+
+      validLinks.push({
+        url,
+        text: item.text || 'מידע נוסף'
+      });
     });
+  }
+
+  if (validLinks.length === 0) {
+    const legacyUrl = safeExternalUrl(properties.link);
+
+    if (legacyUrl) {
+      validLinks.push({
+        url: legacyUrl,
+        text: properties.link_text || 'מידע נוסף'
+      });
+    }
+  }
+
+  if (validLinks.length === 0) return '';
+
+  return `
+    <div class="external-links">
+      ${validLinks.map((item) => `
+        <a class="external-link"
+           href="${escapeHtml(item.url)}"
+           target="_blank"
+           rel="noopener noreferrer">
+          ${escapeHtml(item.text)} ←
+        </a>
+      `).join('')}
+    </div>
+  `;
+}
+
+function updatePanel(properties = {}) {
+  const panel = document.getElementById('panel-content');
+  const day = properties.day
+    ? `<span class="day-badge">יום ${escapeHtml(properties.day)}</span>`
+    : '';
+
+  panel.innerHTML = `
+    ${day}
+    <h2>${escapeHtml(properties.title || 'מידע על המסלול')}</h2>
+    <div class="meta-info">📏 <strong>מרחק:</strong> ${escapeHtml(properties.distance || 'לא צוין')}</div>
+    <div class="meta-info">⏱️ <strong>זמן משוער:</strong> ${escapeHtml(properties.duration || 'לא צוין')}</div>
+    <div class="meta-info">⛰️ <strong>גובה:</strong> ${escapeHtml(properties.elevation || 'לא צוין')}</div>
+    <div class="desc">${escapeHtml(properties.description || 'אין תיאור זמין למקטע זה.')}</div>
+    ${buildLinksHtml(properties)}
+  `;
+}
+
+function showError(message) {
+  document.getElementById('panel-content').innerHTML = `
+    <div class="error-message">
+      <strong>לא ניתן לטעון את המפה.</strong><br>
+      ${escapeHtml(message)}
+    </div>
+  `;
+}
+
+function resetActiveTrack() {
+  if (!activeTrack) return;
+  activeTrack.setStyle({ color: TRACK_COLOR, weight: 5, opacity: 0.9 });
+  activeTrack = null;
+}
+
+function activateTrack(visibleLayer, properties) {
+  resetActiveTrack();
+  activeTrack = visibleLayer;
+  visibleLayer.setStyle({ color: TRACK_ACTIVE_COLOR, weight: 7, opacity: 1 });
+  visibleLayer.bringToFront();
+  updatePanel(properties);
+}
+
+function addTrackFeature(feature) {
+  const latLngs = feature.geometry.coordinates.map(([lng, lat]) => [lat, lng]);
+
+  const visibleLine = L.polyline(latLngs, {
+    color: TRACK_COLOR,
+    weight: 5,
+    opacity: 0.9,
+    lineCap: 'round',
+    lineJoin: 'round'
+  }).addTo(routeGroup);
+
+  const hitLine = L.polyline(latLngs, {
+    color: '#000',
+    weight: 28,
+    opacity: 0,
+    bubblingMouseEvents: false
+  }).addTo(routeGroup);
+
+  const handleSelection = (event) => {
+    activateTrack(visibleLine, feature.properties);
+    L.DomEvent.stopPropagation(event);
+  };
+
+  visibleLine.on('click', handleSelection);
+  hitLine.on('click', handleSelection);
+}
+
+function addSiteFeature(feature) {
+  const [lng, lat] = feature.geometry.coordinates;
+
+  const marker = L.circleMarker([lat, lng], {
+    radius: 9,
+    fillColor: SITE_COLOR,
+    color: '#fff',
+    weight: 3,
+    fillOpacity: 0.95
+  }).addTo(routeGroup);
+
+  marker.on('click', (event) => {
+    resetActiveTrack();
+    updatePanel(feature.properties);
+    L.DomEvent.stopPropagation(event);
+  });
+
+  marker.bindTooltip(
+    escapeHtml(feature.properties?.title || 'אתר במסלול'),
+    { direction: 'top' }
+  );
+}
+
+async function loadRoute() {
+  try {
+    const response = await fetch('./safari_path.geojson', {
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+      throw new Error(`שגיאת שרת ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.type !== 'FeatureCollection' || !Array.isArray(data.features)) {
+      throw new Error('מבנה ה-GeoJSON אינו תקין');
+    }
+
+    data.features.forEach((feature) => {
+      const geometryType = feature.geometry?.type;
+      const featureType = feature.properties?.type;
+
+      if (featureType === 'track' && geometryType === 'LineString') {
+        addTrackFeature(feature);
+      } else if (featureType === 'site' && geometryType === 'Point') {
+        addSiteFeature(feature);
+      }
+    });
+
+    if (routeGroup.getLayers().length > 0) {
+      map.fitBounds(routeGroup.getBounds(), {
+        padding: [35, 35],
+        maxZoom: 10
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    showError(error.message || 'שגיאה לא ידועה');
+  }
+}
+
+map.on('click', resetActiveTrack);
+loadRoute();
