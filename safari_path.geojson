@@ -298,39 +298,21 @@
         "type": "LineString",
         "coordinates": [
           [39.0620, -5.0920],
-          [39.1000, -5.0667]
+          [39.188980,-6.162080]
         ]
       },
       "properties": {
         "type": "track",
-        "day": 9,
-        "title": "יום 9: סיור בעיר הנמל טאנגה וחזרה ללינה ב-Villa Matalai",
-        "distance": "20 ק\"מ תנועה מקומית",
-        "duration": "יום סיור ותרבות מלא",
-        "elevation": "0 מטרים (קו החוף)",
-        "description": "ביקור באתריה ההיסטוריים של טאנגה, סיור בין המבנים הקולוניאליים הישנים והשווקים של עיר החוף, וחזרה לקראת ערב ללינה שנייה בבקתות של Villa Matalai.",
-        "link": "https://en.wikipedia.org/wiki/Tanga,_Tanzania",
-        "link_text": "⚓ רקע היסטורי וארכיטקטורה קולוניאלית בטנגה (Wikipedia)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [39.3622, -5.7331]
-      },
-      "properties": {
-        "type": "site",
         "day": 10,
-        "title": "יום 10: מעבר אל החופים הלבנים של זנזיבר (Nungwi)",
-        "distance": "חציית מצר זנזיבר (הפלגה/טיסה)",
-        "duration": "יום נופש ופעילות מלא",
-        "elevation": "גובה: פני הים (0 מ')",
-        "description": "מעבר ימי מטאנגה אל האי זנזיבר והמשך לחופים הצפוניים של נונגווי. זמן למנוחה, צפייה בתופעת הגאות והשפל הקיצונית או שנורקלינג במים הצלולים.",
-        "link": "https://en.wikipedia.org/wiki/Nungwi",
-        "link_text": "🏝️ מדריך חופים ופעילויות ימיות בנונגווי (Wikipedia)"
+        "title": "מחוף טנגה לזנזיבר עיר האבן",
+        "distance": " ✈️טיסה",
+        "duration": "חצי שעה",
+         "description": "מטנגה לעיר האבן.",
+        
       }
     },
+    
+
 {
       "type": "Feature",
       "geometry": {
@@ -341,9 +323,7 @@
         "type": "site",
         "day": 11,
         "title": "עיר האבן זנזיבר",
-        "distance": "55 ",
-        "duration": "שעה וחצי נסיעה",
-        "elevation": "פני הים",
+         "elevation": "פני הים",
         "description": "סיור בעיר האבן",
         "link": "https://en.wikipedia.org/wiki/Stone_Town",
         "link_text": "stone town"
