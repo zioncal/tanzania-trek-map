@@ -152,7 +152,7 @@
         "distance": "12 ק\"מ הליכה",
         "duration": "4 שעות הליכה",
         "elevation": "עלייה: 400 מטר, ירידה: 300 מטר",
-        "description": "הליכה בין טרסות חקלאיות מסורתיות בהרים. עצירה לארוחת צהריים אותנטית במסעדה כפרית מקומית ושיחות WITH חקלאי האזור.",
+        "description": "הליכה בין טרסות חקלאיות מסורתיות בהרים. עצירה לארוחת צהריים אותנטית במסעדה כפרית מקומית ושיחות עם חקלאי האזור.",
         "link": "https://travelwithrachel.co.il/tours/crops-in-tanzania-corn-and-banana-plantations/",
         "link_text": "🍲 סקירה תרבותית על חקלאות ומזון הררי בטנזניה"
       }
@@ -193,7 +193,7 @@
         "elevation": "עלייה: 800 מטר, ירידה: 650 מטר",
         "description": "יום הליכה מאתגר דרך שמורת יער גשם קדמונית, המלאה בצמחייה אנדמית. ביקור בשוק שבועי צבעוני. הגעה ללודג' הררי בסיום המסלול.",
         "link": "https://mapcarta.com/12652584",
-        "link_text": "🌿  Lukozi אל Mkuzi"
+        "link_text": "🌿 מידע על מסלול ההליכה Lukozi אל Mkuzi"
       }
     },
     {
@@ -232,7 +232,7 @@
         "elevation": "ירידה מצטברת: 400 מטר",
         "description": "צעידה במעבה הג'ונגל תחת חופת עצים ענקית המגנה מפני השמש, ויציאה לקו הרכס המשקיף לעבר לושוטו - בירת הרכס המרכזית (1,400 מ').",
         "link": "https://www.safari.co.za/Tanzania_Travel_Guide-travel/lushoto-and-the-usambara-mountains.html",
-        "link_text": "🏡 Mkuzi אל לוּשוֹטוֹ"
+        "link_text": "🏡 מידע על הדרך מ-Mkuzi אל לוּשוֹטוֹ"
       }
     },
     {
@@ -298,35 +298,19 @@
         "type": "LineString",
         "coordinates": [
           [39.0620, -5.0920],
-          [39.188980,-6.162080]
+          [39.0620, -5.0920]
         ]
       },
       "properties": {
         "type": "track",
-        "day": 10,
-        "title": "מחוף טנגה לזנזיבר עיר האבן",
-        "distance": " ✈️טיסה",
-        "duration": "חצי שעה",
-         "description": "מטנגה לעיר האבן.",
-        
-      }
-    },
-    
-
-{
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [ 39.188980,-6.162080]
-      },
-      "properties": {
-        "type": "site",
-        "day": 11,
-        "title": "עיר האבן זנזיבר",
-         "elevation": "פני הים",
-        "description": "סיור בעיר האבן",
-        "link": "https://en.wikipedia.org/wiki/Stone_Town",
-        "link_text": "stone town"
+        "day": 9,
+        "title": "יום 9: יום נופש מלא בחוף טאנגה - Villa Matalai",
+        "distance": "0 ק\"מ (זמן חוף)",
+        "duration": "יום חופשי",
+        "elevation": "גובה פני הים",
+        "description": "יום של רגיעה מוחלטת בווילה, סיורים עצמאיים על קו המים או מנוחה לקראת הטיסה לזנזיבר מחר.",
+        "link": "https://www.booking.com/hotel/tz/villa-matalai.he.html",
+        "link_text": "🏨 פרטי הווילה והחוף (Booking)"
       }
     },
     {
@@ -334,7 +318,44 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [39.1979, -6.1659],
+          [39.0620, -5.0920],
+          [39.188980, -6.162080]
+        ]
+      },
+      "properties": {
+        "type": "track",
+        "day": 10,
+        "title": "יום 10: מחוף טנגה לזנזיבר עיר האבן",
+        "distance": "✈️ טיסת פנים",
+        "duration": "חצי שעה",
+        "elevation": "גובה פני הים",
+        "description": "טיסת פנים קצרה משדה התעופה של טנגה ישירות אל עיר האבן ההיסטורית של זנזיבר."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [39.188980, -6.162080]
+      },
+      "properties": {
+        "type": "site",
+        "day": 11,
+        "title": "יום 11: עיר האבן זנזיבר (Stone Town)",
+        "distance": "סיור עירוני רגלי",
+        "duration": "חצי יום",
+        "elevation": "פני הים",
+        "description": "סיור מרתק בין הסמטאות הצרות, הארכיטקטורה הייחודית והשווקים של עיר האבן העתיקה.",
+        "link": "https://en.wikipedia.org/wiki/Stone_Town",
+        "link_text": "🕌 רקע על עיר האבן (Wikipedia)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [39.188980, -6.162080],
           [36.6833, -3.3667]
         ]
       },
