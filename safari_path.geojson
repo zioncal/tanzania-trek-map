@@ -331,6 +331,24 @@
         "link_text": "🏝️ מדריך חופים ופעילויות ימיות בנונגווי (Wikipedia)"
       }
     },
+{
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-6.162080, 39.188980]
+      },
+      "properties": {
+        "type": "site",
+        "day": 1,
+        "title": "עיר האבן זנזיבר",
+        "distance": "55 ",
+        "duration": "שעה וחצי נסיעה",
+        "elevation": "פני הים",
+        "description": "סיור בעיר האבן",
+        "link": "https://en.wikipedia.org/wiki/Stone_Town",
+        "link_text": "stone town"
+      }
+    },
     {
       "type": "Feature",
       "geometry": {
