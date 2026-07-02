@@ -1,96 +1,400 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>מסלול טיול אינטראקטיבי - טנזניה</title>
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-            background-color: #f4f6f7;
-        }
-        
-        /* ברירת מחדל למחשבים (Desktop) - פאנל מימין ומפה משמאל */
-        #map {
-            flex: 1;
-            height: 100%;
-            z-index: 1;
-        }
-        #info-panel {
-            width: 390px;
-            background-color: #f8f9fa;
-            border-left: 2px solid #dee2e6;
-            padding: 22px;
-            box-sizing: border-box;
-            overflow-y: auto;
-            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-            z-index: 2;
-        }
-        
-        h2 { color: #2c3e50; margin-top: 0; font-size: 19px; border-bottom: 2px solid #3498db; padding-bottom: 8px; margin-bottom: 12px; }
-        .meta-info { font-size: 14px; color: #555; margin-bottom: 6px; font-weight: normal; }
-        .desc { line-height: 1.6; color: #34495e; font-size: 13.5px; }
-        .placeholder { color: #95a5a6; font-style: italic; text-align: center; margin-top: 50%; font-size: 14px; }
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description"
+        content="מפה אינטראקטיבית למסלול טיול וטרק בטנזניה ובזנזיבר">
+  <title>מפת הטיול בטנזניה ובזנזיבר</title>
 
-        /* ======================================================= */
-        /* התאמה למכשירים ניידים וסמארטפונים (Mobile Responsive) */
-        /* ======================================================= */
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-            #map {
-                width: 100%;
-                height: 100vh;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-            #info-panel {
-                width: 92%;
-                max-height: 32vh; /* הגבלת הגובה כדי שהמפה תישאר פתוחה לרווחה */
-                position: absolute;
-                bottom: 12px;
-                left: 4%;
-                right: 4%;
-                border-left: none;
-                border-radius: 14px;
-                box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
-                padding: 16px;
-                background-color: rgba(255, 255, 255, 0.96);
-                backdrop-filter: blur(6px);
-                z-index: 1000;
-                overflow-y: auto;
-            }
-            .placeholder {
-                margin-top: 5px;
-                font-size: 13px;
-            }
-            h2 { font-size: 16px; margin-bottom: 6px; padding-bottom: 4px; }
-            .meta-info { font-size: 12.5px; margin-bottom: 4px; }
-            .desc { font-size: 13px; line-height: 1.5; }
-        }
-    </style>
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIINfQ3ynqzJOZGa5Bq4eY5FQ1rZxw4An40="
+        crossorigin="">
+
+  <style>
+    :root {
+      --panel-width: 410px;
+      --blue: #1877c9;
+      --blue-dark: #0f4f8a;
+      --green: #15965d;
+      --green-dark: #0f7248;
+      --orange: #e76f35;
+      --text: #263645;
+      --muted: #657786;
+      --panel: #ffffff;
+      --guide-bg: #f5f0e5;
+      --border: #d8e0e6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      overflow: hidden;
+      font-family: Arial, "Noto Sans Hebrew", sans-serif;
+      color: var(--text);
+      background: #eef2f5;
+    }
+
+    #map {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      z-index: 1;
+    }
+
+    #info-panel {
+      position: relative;
+      z-index: 1000;
+      width: var(--panel-width);
+      padding: 20px;
+      overflow-y: auto;
+      background: var(--panel);
+      border-left: 1px solid var(--border);
+      box-shadow: -4px 0 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .panel-title {
+      margin: 0 0 7px;
+      color: var(--blue-dark);
+      font-size: 24px;
+      line-height: 1.25;
+    }
+
+    .panel-subtitle {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .guide-card {
+      margin: 0 0 18px;
+      padding: 15px;
+      background: var(--guide-bg);
+      border-right: 5px solid var(--green);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    }
+
+    .guide-card summary {
+      position: relative;
+      padding-left: 25px;
+      color: #1f5d45;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.35;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .guide-card summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .guide-card summary::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "＋";
+      color: var(--green-dark);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .guide-card[open] summary::after {
+      content: "−";
+    }
+
+    .guide-content {
+      padding-top: 11px;
+      color: #3d5149;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .guide-content p {
+      margin: 0 0 9px;
+    }
+
+    .guide-content blockquote {
+      margin: 12px 0 0;
+      padding: 11px 13px;
+      color: #40534b;
+      background: rgba(255, 255, 255, 0.85);
+      border-right: 3px solid #90b7a2;
+      border-radius: 8px;
+      font-style: italic;
+      line-height: 1.65;
+    }
+
+    #panel-content {
+      min-height: 120px;
+    }
+
+    .day-badge {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      color: #fff;
+      background: var(--blue);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    #panel-content h2 {
+      margin: 0 0 14px;
+      color: #203545;
+      font-size: 20px;
+      line-height: 1.35;
+    }
+
+    .meta-info {
+      margin-bottom: 8px;
+      padding: 9px 11px;
+      color: #4f6474;
+      background: #f4f7f9;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .desc {
+      margin-top: 14px;
+      color: #344b5c;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .external-links {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-top: 17px;
+    }
+
+    .external-link {
+      display: block;
+      padding: 10px 14px;
+      color: #fff;
+      background: var(--green);
+      border-radius: 8px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 700;
+      line-height: 1.4;
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+
+    .external-link:hover,
+    .external-link:focus {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+    }
+
+    .placeholder,
+    .error-message {
+      margin-top: 15px;
+      padding: 17px;
+      border-radius: 10px;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    .placeholder {
+      color: #647786;
+      background: #f4f7f9;
+    }
+
+    .error-message {
+      color: #8b2c1f;
+      background: #fdecea;
+      text-align: right;
+    }
+
+    .legend {
+      margin-top: 20px;
+      padding-top: 15px;
+      color: #5e7180;
+      border-top: 1px solid #e0e6ea;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .legend-dot,
+    .legend-line {
+      display: inline-block;
+      margin-left: 7px;
+      vertical-align: middle;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      background: var(--green);
+      border: 2px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px var(--green);
+    }
+
+    .legend-line {
+      width: 25px;
+      height: 4px;
+      background: var(--blue);
+      border-radius: 5px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        display: block;
+      }
+
+      #map {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      #info-panel {
+        position: absolute;
+        right: 4%;
+        bottom: 14px;
+        left: 4%;
+        width: 92%;
+        max-height: 47vh;
+        padding: 14px;
+        border: 0;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.97);
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(6px);
+      }
+
+      .panel-title {
+        font-size: 19px;
+      }
+
+      .panel-subtitle {
+        margin-bottom: 10px;
+        font-size: 12px;
+      }
+
+      .guide-card {
+        margin-bottom: 12px;
+        padding: 11px 12px;
+      }
+
+      .guide-card summary {
+        font-size: 15px;
+      }
+
+      .guide-content {
+        font-size: 12px;
+      }
+
+      #panel-content h2 {
+        font-size: 17px;
+      }
+
+      .meta-info {
+        padding: 6px 8px;
+        font-size: 12px;
+      }
+
+      .desc {
+        font-size: 13px;
+      }
+
+      .external-link {
+        padding: 9px 11px;
+        font-size: 13px;
+      }
+
+      .legend {
+        display: none;
+      }
+
+      .placeholder {
+        margin-top: 7px;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <main id="map"
+        aria-label="מפה אינטראקטיבית של מסלול הטיול בטנזניה ובזנזיבר"></main>
 
-    <div id="info-panel">
-        <div id="panel-content">
-            <p class="placeholder">🗺️ לחץ על יום או נתיב במפה להצגת פרטי הטרק והמרחקים</p>
-        </div>
+  <aside id="info-panel" aria-live="polite">
+    <h1 class="panel-title">הטיול בטנזניה ובזנזיבר</h1>
+
+    <p class="panel-subtitle">
+      לחץ על נקודה ירוקה לקבלת מידע על אתר, או בכל מקום לאורך קו כחול
+      לקבלת הסבר על מקטע הדרך.
+    </p>
+
+    <details class="guide-card">
+      <summary>מדריך הטיול: ניר כץ</summary>
+
+      <div class="guide-content">
+        <p>
+          ניר כץ, יליד 1972, הוא טיילן בנשמה, הפועל מתוך חיבור אמיתי
+          לאנשים ולטבע הפראי.
+        </p>
+
+        <p>
+          ניר שהה כחמש שנים באפריקה, בסיני ובמזרח הרחוק, ספג תרבויות,
+          נופים וסיפורי חיים, ומקדיש את חייו לעשייה קהילתית וחברתית.
+        </p>
+
+        <p>
+          בעבר עמד בראש עמותה חברתית ויזם והוביל תוכנית פורצת דרך
+          לבני נוער יוצאי אתיופיה. הוא דובר כשש שפות, ובהן סוואהילי,
+          ערבית ואמהרית באופן שוטף.
+        </p>
+
+        <blockquote>
+          „החוויה היא מסע חי ועמוק — חיבור בין נופים לסיפורי עם,
+          בין פתגמים לאוכל מסורתי, ובין ההיסטוריה הרחוקה למפגש הקרוב.
+          הרפתקה אמיתית היא כזו שחולקים עם האנשים שאוהבים.”
+        </blockquote>
+      </div>
+    </details>
+
+    <section id="panel-content">
+      <div class="placeholder">טוען את המסלול…</div>
+    </section>
+
+    <div class="legend">
+      <div>
+        <span class="legend-dot"></span>
+        אתר או מקום לינה
+      </div>
+
+      <div>
+        <span class="legend-line"></span>
+        מקטע דרך שניתן ללחוץ עליו לכל אורכו
+      </div>
     </div>
+  </aside>
 
-    <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
