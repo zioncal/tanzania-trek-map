@@ -407,8 +407,9 @@
         "distance": "✈️ טיסת פנים",
         "duration": "חצי שעה",
         "elevation": "גובה פני הים",
-        "description": "טיסת פנים קצרה משדה התעופה של טנגה ישירות אל עיר האבן ההיסטורית של זנזיבר."
-       
+        "description": "טיסת פנים קצרה משדה התעופה של טנגה ישירות אל עיר האבן ההיסטורית של זנזיבר.",
+        "link": "https://en.wikipedia.org/wiki/Stone_Town",
+        "link_text": "✈️ מידע על עיר האבן בזנזיבר"
       }
     },
     {
@@ -428,10 +429,16 @@
         "duration": "חצי יום",
         "elevation": "פני הים",
         "description": "סיור מרתק בין הסמטאות הצרות, הארכיטקטורה הייחודית והשווקים של עיר האבן העתיקה.",
-        "link": "https://en.wikipedia.org/wiki/Stone_Town",
-        "link_text": "🕌 רקע על עיר האבן (Wikipedia)",
- "link": "https://www.booking.com/hotel/tz/zanzibar-coffee-house.he.html",
-        "link_text": " מידע והזמנות חדרים ב-Zanzibar Coffee House (Booking)"
+        "links": [
+          {
+            "url": "https://en.wikipedia.org/wiki/Stone_Town",
+            "text": "🕌 רקע על עיר האבן (Wikipedia)"
+          },
+          {
+            "url": "https://www.booking.com/hotel/tz/zanzibar-coffee-house.he.html",
+            "text": "🏨 מידע והזמנות חדרים ב-Zanzibar Coffee House (Booking)"
+          }
+        ]
       }
     },
     {
@@ -456,9 +463,7 @@
         "distance": "טיסות בינלאומיות",
         "duration": "מעבר שדות תעופה",
         "elevation": "טיסה חזרה",
-        "description": "בוקר אחרון של רגיעה מול מי הטורקיז, העברה לשדה התעופה של זנזיבר וטיסה חזרה לישראל לסיום המסע המרתק.",
-        "link": "https://www.booking.com/hotel/tz/zanzibar-coffee-house.he.html",
-        "link_text": "✈️ מידע והזמנות חדרים ב-Zanzibar Coffee House (Booking)"
+        "description": "בוקר אחרון של רגיעה מול מי הטורקיז, העברה לשדה התעופה של זנזיבר וטיסה חזרה לישראל לסיום המסע המרתק."
       }
     }
   ]
