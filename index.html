@@ -41,6 +41,7 @@
 
     body {
       display: flex;
+      direction: ltr;
       overflow: hidden;
       font-family: Arial, "Noto Sans Hebrew", sans-serif;
       color: var(--text);
@@ -56,6 +57,8 @@
 
     #info-panel {
       position: relative;
+      direction: rtl;
+      flex: 0 0 var(--panel-width);
       z-index: 1000;
       width: var(--panel-width);
       padding: 20px;
@@ -335,9 +338,6 @@
 </head>
 
 <body>
-  <main id="map"
-        aria-label="מפה אינטראקטיבית של מסלול הטיול בטנזניה ובזנזיבר"></main>
-
   <aside id="info-panel" aria-live="polite">
     <h1 class="panel-title">הטיול בטנזניה ובזנזיבר</h1>
 
@@ -346,10 +346,10 @@
       לקבלת הסבר על מקטע הדרך.
     </p>
 
-    <details class="guide-card">
-      <summary>מדריך הטיול: ניר כץ</summary>
+    <section class="guide-card" aria-label="מידע על מדריך הטיול">
+      <h2 style="margin:0 0 10px;color:#1f5d45;font-size:19px;">מדריך הטיול: ניר כץ</h2>
 
-      <div class="guide-content">
+      <div class="guide-content" style="padding-top:0;">
         <p>
           ניר כץ, יליד 1972, הוא טיילן בנשמה, הפועל מתוך חיבור אמיתי
           לאנשים ולטבע הפראי.
@@ -372,7 +372,7 @@
           הרפתקה אמיתית היא כזו שחולקים עם האנשים שאוהבים.”
         </blockquote>
       </div>
-    </details>
+    </section>
 
     <section id="panel-content">
       <div class="placeholder">טוען את המסלול…</div>
@@ -390,6 +390,9 @@
       </div>
     </div>
   </aside>
+
+  <main id="map"
+        aria-label="מפה אינטראקטיבית של מסלול הטיול בטנזניה ובזנזיבר"></main>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
