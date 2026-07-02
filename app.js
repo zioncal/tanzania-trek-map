@@ -30,6 +30,51 @@ map.getPane('siteTooltipPane').style.zIndex = 700;
 const routeGroup = L.featureGroup().addTo(map);
 let activeTrack = null;
 
+
+function ensureGuideCard() {
+  const infoPanel = document.getElementById('info-panel');
+  if (!infoPanel || document.getElementById('guide-card-fixed')) return;
+
+  const guideCard = document.createElement('section');
+  guideCard.id = 'guide-card-fixed';
+  guideCard.setAttribute('aria-label', 'מידע על מדריך הטיול');
+  guideCard.style.cssText = [
+    'display:block',
+    'margin:0 0 18px',
+    'padding:15px',
+    'background:#f5f0e5',
+    'border-right:5px solid #15965d',
+    'border-radius:12px',
+    'box-shadow:0 2px 8px rgba(0,0,0,.08)',
+    'color:#3d5149',
+    'font-size:14px',
+    'line-height:1.65'
+  ].join(';');
+
+  guideCard.innerHTML = `
+    <h2 style="margin:0 0 10px;color:#1f5d45;font-size:19px;line-height:1.35;">
+      מדריך הטיול: ניר כץ
+    </h2>
+    <p style="margin:0 0 9px;">
+      ניר כץ, יליד 1972, הוא טיילן בנשמה, הפועל מתוך חיבור אמיתי לאנשים ולטבע הפראי.
+    </p>
+    <p style="margin:0 0 9px;">
+      ניר שהה כחמש שנים באפריקה, בסיני ובמזרח הרחוק, ספג תרבויות, נופים וסיפורי חיים,
+      ומקדיש את חייו לעשייה קהילתית וחברתית.
+    </p>
+    <p style="margin:0 0 9px;">
+      בעבר עמד בראש עמותה חברתית ויזם והוביל תוכנית פורצת דרך לבני נוער יוצאי אתיופיה.
+      הוא דובר כשש שפות, ובהן סוואהילי, ערבית ואמהרית באופן שוטף.
+    </p>
+    <blockquote style="margin:12px 0 0;padding:11px 13px;background:#fff;border-right:3px solid #90b7a2;border-radius:8px;font-style:italic;">
+      „החוויה היא מסע חי ועמוק — חיבור בין נופים לסיפורי עם, בין פתגמים לאוכל מסורתי,
+      ובין ההיסטוריה הרחוקה למפגש הקרוב. הרפתקה אמיתית היא כזו שחולקים עם האנשים שאוהבים.”
+    </blockquote>`;
+
+  const panelContent = document.getElementById('panel-content');
+  infoPanel.insertBefore(guideCard, panelContent || infoPanel.firstChild);
+}
+
 function escapeHtml(value) {
   return String(value ?? '')
     .replaceAll('&', '&amp;')
@@ -173,5 +218,6 @@ async function loadRoute() {
   }
 }
 
+ensureGuideCard();
 map.on('click', resetActiveTrack);
 loadRoute();
