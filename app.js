@@ -1,10 +1,22 @@
 'use strict';
 
+const DEFAULT_VIEW = [-4.5, 38.5];
+const DEFAULT_ZOOM = 7;
 const TRACK_COLOR = '#1877c9';
 const TRACK_ACTIVE_COLOR = '#e76f35';
+const SITE_COLOR = '#15965d';
 
-const map = L.map('map', { zoomControl: false, tap: true })
-  .setView([-4.5, 38.5], 7);
+const mapElement = document.getElementById('map');
+const panelElement = document.getElementById('panel-content');
+
+if (!mapElement || !panelElement || typeof L === 'undefined') {
+  throw new Error('Leaflet או רכיבי המפה לא נטענו כראוי.');
+}
+
+const map = L.map(mapElement, {
+  zoomControl: false,
+  tap: true
+}).setView(DEFAULT_VIEW, DEFAULT_ZOOM);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
@@ -14,121 +26,85 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 L.control.zoom({ position: 'topleft' }).addTo(map);
 L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
 
-// שכבות נפרדות מבטיחות שנקודות האתרים תמיד מעל קווי המסלול.
-map.createPane('trackPane');
-map.getPane('trackPane').style.zIndex = 410;
+map.createPane('tracksPane');
+map.getPane('tracksPane').style.zIndex = '410';
+map.createPane('trackHitsPane');
+map.getPane('trackHitsPane').style.zIndex = '420';
+map.createPane('sitesPane');
+map.getPane('sitesPane').style.zIndex = '650';
 
-map.createPane('trackHitPane');
-map.getPane('trackHitPane').style.zIndex = 420;
-
-map.createPane('sitePane');
-map.getPane('sitePane').style.zIndex = 650;
-
-map.createPane('siteTooltipPane');
-map.getPane('siteTooltipPane').style.zIndex = 700;
-
-const routeGroup = L.featureGroup().addTo(map);
+const boundsGroup = L.featureGroup().addTo(map);
 let activeTrack = null;
 
-
-function ensureGuideCard() {
-  const infoPanel = document.getElementById('info-panel');
-  if (!infoPanel || document.getElementById('guide-card-fixed')) return;
-
-  const guideCard = document.createElement('section');
-  guideCard.id = 'guide-card-fixed';
-  guideCard.setAttribute('aria-label', 'מידע על מדריך הטיול');
-  guideCard.style.cssText = [
-    'display:block',
-    'margin:0 0 18px',
-    'padding:15px',
-    'background:#f5f0e5',
-    'border-right:5px solid #15965d',
-    'border-radius:12px',
-    'box-shadow:0 2px 8px rgba(0,0,0,.08)',
-    'color:#3d5149',
-    'font-size:14px',
-    'line-height:1.65'
-  ].join(';');
-
-  guideCard.innerHTML = `
-    <h2 style="margin:0 0 10px;color:#1f5d45;font-size:19px;line-height:1.35;">
-      מדריך הטיול: ניר כץ
-    </h2>
-    <p style="margin:0 0 9px;">
-      ניר כץ, יליד 1972, הוא טיילן בנשמה, הפועל מתוך חיבור אמיתי לאנשים ולטבע הפראי.
-    </p>
-    <p style="margin:0 0 9px;">
-      ניר שהה כחמש שנים באפריקה, בסיני ובמזרח הרחוק, ספג תרבויות, נופים וסיפורי חיים,
-      ומקדיש את חייו לעשייה קהילתית וחברתית.
-    </p>
-    <p style="margin:0 0 9px;">
-      בעבר עמד בראש עמותה חברתית ויזם והוביל תוכנית פורצת דרך לבני נוער יוצאי אתיופיה.
-      הוא דובר כשש שפות, ובהן סוואהילי, ערבית ואמהרית באופן שוטף.
-    </p>
-    <blockquote style="margin:12px 0 0;padding:11px 13px;background:#fff;border-right:3px solid #90b7a2;border-radius:8px;font-style:italic;">
-      „החוויה היא מסע חי ועמוק — חיבור בין נופים לסיפורי עם, בין פתגמים לאוכל מסורתי,
-      ובין ההיסטוריה הרחוקה למפגש הקרוב. הרפתקה אמיתית היא כזו שחולקים עם האנשים שאוהבים.”
-    </blockquote>`;
-
-  const panelContent = document.getElementById('panel-content');
-  infoPanel.insertBefore(guideCard, panelContent || infoPanel.firstChild);
-}
-
 function escapeHtml(value) {
-  return String(value ?? '')
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
 function safeExternalUrl(value) {
   if (!value) return '';
   try {
     const url = new URL(value, window.location.href);
-    return ['http:', 'https:'].includes(url.protocol) ? url.href : '';
-  } catch {
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : '';
+  } catch (error) {
     return '';
   }
 }
 
-function buildLinksHtml(properties = {}) {
+function getLinks(properties) {
   const links = [];
 
   if (Array.isArray(properties.links)) {
-    for (const item of properties.links) {
-      const url = safeExternalUrl(item?.url);
-      if (url) links.push({ url, text: item.text || 'מידע נוסף' });
-    }
+    properties.links.forEach(function (item) {
+      if (!item || typeof item !== 'object') return;
+      const url = safeExternalUrl(item.url);
+      if (url) links.push({ url: url, text: item.text || 'מידע נוסף' });
+    });
   }
 
   if (links.length === 0) {
     const url = safeExternalUrl(properties.link);
-    if (url) links.push({ url, text: properties.link_text || 'מידע נוסף' });
+    if (url) links.push({ url: url, text: properties.link_text || 'מידע נוסף' });
   }
 
-  if (links.length === 0) return '';
-
-  return `<div class="external-links">${links.map(item => `
-    <a class="external-link" href="${escapeHtml(item.url)}"
-       target="_blank" rel="noopener noreferrer">
-      ${escapeHtml(item.text)} ←
-    </a>`).join('')}</div>`;
+  return links;
 }
 
-function updatePanel(properties = {}) {
-  const panel = document.getElementById('panel-content');
-  panel.innerHTML = `
-    ${properties.day ? `<span class="day-badge">יום ${escapeHtml(properties.day)}</span>` : ''}
-    <h2>${escapeHtml(properties.title || 'מידע על המסלול')}</h2>
-    <div class="meta-info">📏 <strong>מרחק:</strong> ${escapeHtml(properties.distance || 'לא צוין')}</div>
-    <div class="meta-info">⏱️ <strong>זמן משוער:</strong> ${escapeHtml(properties.duration || 'לא צוין')}</div>
-    <div class="meta-info">⛰️ <strong>גובה:</strong> ${escapeHtml(properties.elevation || 'לא צוין')}</div>
-    <div class="desc">${escapeHtml(properties.description || 'אין תיאור זמין.')}</div>
-    ${buildLinksHtml(properties)}
-  `;
+function buildLinksHtml(properties) {
+  const links = getLinks(properties);
+  if (links.length === 0) return '';
+
+  return '<div class="external-links">' + links.map(function (item) {
+    return '<a class="external-link" href="' + escapeHtml(item.url) +
+      '" target="_blank" rel="noopener noreferrer">' +
+      escapeHtml(item.text) + '</a>';
+  }).join('') + '</div>';
+}
+
+function updatePanel(properties) {
+  properties = properties || {};
+  const day = properties.day !== undefined && properties.day !== null
+    ? '<span class="day-badge">יום ' + escapeHtml(properties.day) + '</span>'
+    : '';
+
+  panelElement.innerHTML =
+    day +
+    '<h2>' + escapeHtml(properties.title || 'מידע על המסלול') + '</h2>' +
+    '<div class="meta-info">📏 <strong>מרחק:</strong> ' + escapeHtml(properties.distance || 'לא צוין') + '</div>' +
+    '<div class="meta-info">⏱️ <strong>זמן משוער:</strong> ' + escapeHtml(properties.duration || 'לא צוין') + '</div>' +
+    '<div class="meta-info">⛰️ <strong>גובה:</strong> ' + escapeHtml(properties.elevation || 'לא צוין') + '</div>' +
+    '<div class="desc">' + escapeHtml(properties.description || 'אין תיאור זמין.') + '</div>' +
+    buildLinksHtml(properties);
+}
+
+function showError(message) {
+  panelElement.innerHTML =
+    '<div class="error-message"><strong>לא ניתן לטעון את המפה.</strong><br>' +
+    escapeHtml(message) + '<br><br>ודא ששלושת הקבצים נמצאים באותה תיקייה ובשמות המדויקים.</div>';
 }
 
 function resetActiveTrack() {
@@ -138,86 +114,111 @@ function resetActiveTrack() {
 }
 
 function addTrackFeature(feature) {
-  const latLngs = feature.geometry.coordinates.map(([lng, lat]) => [lat, lng]);
+  const coordinates = feature.geometry.coordinates;
+  if (!Array.isArray(coordinates) || coordinates.length < 2) return;
 
-  const line = L.polyline(latLngs, {
-    pane: 'trackPane', color: TRACK_COLOR, weight: 5, opacity: 0.9,
-    lineCap: 'round', lineJoin: 'round'
-  }).addTo(routeGroup);
+  const latLngs = coordinates.map(function (coord) {
+    return [coord[1], coord[0]];
+  });
+
+  const visibleLine = L.polyline(latLngs, {
+    pane: 'tracksPane',
+    color: TRACK_COLOR,
+    weight: 5,
+    opacity: 0.9,
+    lineCap: 'round',
+    lineJoin: 'round'
+  }).addTo(map);
 
   const hitLine = L.polyline(latLngs, {
-    pane: 'trackHitPane', color: '#000', weight: 24, opacity: 0,
+    pane: 'trackHitsPane',
+    color: '#000000',
+    weight: 24,
+    opacity: 0,
     bubblingMouseEvents: false
-  }).addTo(routeGroup);
+  }).addTo(map);
 
-  const select = event => {
+  boundsGroup.addLayer(visibleLine);
+
+  function selectTrack(event) {
     resetActiveTrack();
-    activeTrack = line;
-    line.setStyle({ color: TRACK_ACTIVE_COLOR, weight: 7, opacity: 1 });
-    updatePanel(feature.properties);
-    L.DomEvent.stopPropagation(event);
-  };
+    activeTrack = visibleLine;
+    visibleLine.setStyle({ color: TRACK_ACTIVE_COLOR, weight: 7, opacity: 1 });
+    updatePanel(feature.properties || {});
+    if (event) L.DomEvent.stopPropagation(event);
+  }
 
-  line.on('click', select);
-  hitLine.on('click', select);
-  line.bindTooltip(`יום ${feature.properties?.day || ''} – ${escapeHtml(feature.properties?.title || '')}`, { sticky: true });
-}
-
-function makeDayIcon(day) {
-  return L.divIcon({
-    className: 'day-site-marker',
-    html: `<div style="width:34px;height:34px;border-radius:50%;background:#15965d;color:white;border:3px solid white;box-shadow:0 1px 6px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;">${escapeHtml(day)}</div>`,
-    iconSize: [40, 40],
-    iconAnchor: [20, 20]
+  visibleLine.on('click', selectTrack);
+  hitLine.on('click', selectTrack);
+  hitLine.bindTooltip('יום ' + escapeHtml((feature.properties || {}).day || '') + ' – לחץ לפרטים', {
+    sticky: true,
+    direction: 'top'
   });
 }
 
 function addSiteFeature(feature) {
-  const [lng, lat] = feature.geometry.coordinates;
-  const marker = L.marker([lat, lng], {
-    pane: 'sitePane',
-    icon: makeDayIcon(feature.properties?.day || '•'),
-    riseOnHover: true,
-    bubblingMouseEvents: false
-  }).addTo(routeGroup);
+  const coordinates = feature.geometry.coordinates;
+  if (!Array.isArray(coordinates) || coordinates.length < 2) return;
 
-  marker.on('click', event => {
+  const properties = feature.properties || {};
+  const dayText = properties.day == null ? '' : String(properties.day);
+
+  const marker = L.marker([coordinates[1], coordinates[0]], {
+    pane: 'sitesPane',
+    bubblingMouseEvents: false,
+    icon: L.divIcon({
+      className: 'day-marker-wrapper',
+      html: '<div class="day-marker">' + escapeHtml(dayText) + '</div>',
+      iconSize: [34, 34],
+      iconAnchor: [17, 17]
+    })
+  }).addTo(map);
+
+  boundsGroup.addLayer(marker);
+
+  marker.on('click', function (event) {
     resetActiveTrack();
-    updatePanel(feature.properties);
+    updatePanel(properties);
     L.DomEvent.stopPropagation(event);
   });
 
-  marker.bindTooltip(escapeHtml(feature.properties?.title || 'אתר במסלול'), {
-    pane: 'siteTooltipPane', direction: 'top', offset: [0, -18]
+  marker.bindTooltip(escapeHtml(properties.title || 'אתר במסלול'), {
+    direction: 'top',
+    offset: [0, -17]
   });
 }
 
 async function loadRoute() {
   try {
-    const response = await fetch('./safari_path.geojson', { cache: 'no-store' });
-    if (!response.ok) throw new Error(`שגיאת שרת ${response.status}`);
+    const response = await fetch('./safari_path.geojson?v=20260702', { cache: 'no-store' });
+    if (!response.ok) throw new Error('שגיאת שרת ' + response.status + ' בעת טעינת safari_path.geojson');
 
     const data = await response.json();
     if (data.type !== 'FeatureCollection' || !Array.isArray(data.features)) {
-      throw new Error('מבנה קובץ ה-GeoJSON אינו תקין');
+      throw new Error('מבנה קובץ ה-GeoJSON אינו FeatureCollection תקין.');
     }
 
-    data.features
-      .filter(f => f.properties?.type === 'track' && f.geometry?.type === 'LineString')
-      .forEach(addTrackFeature);
+    const tracks = data.features.filter(function (feature) {
+      return feature.geometry && feature.geometry.type === 'LineString' &&
+        feature.properties && feature.properties.type === 'track';
+    });
+    const sites = data.features.filter(function (feature) {
+      return feature.geometry && feature.geometry.type === 'Point' &&
+        feature.properties && feature.properties.type === 'site';
+    });
 
-    data.features
-      .filter(f => f.properties?.type === 'site' && f.geometry?.type === 'Point')
-      .forEach(addSiteFeature);
+    tracks.forEach(addTrackFeature);
+    sites.forEach(addSiteFeature);
 
-    map.fitBounds(routeGroup.getBounds(), { padding: [35, 35], maxZoom: 10 });
+    if (boundsGroup.getLayers().length === 0) throw new Error('לא נמצאו שכבות להצגה.');
+
+    map.fitBounds(boundsGroup.getBounds(), { padding: [35, 35], maxZoom: 10 });
+    panelElement.innerHTML = '<div class="placeholder">המפה מוכנה.<br>לחץ על מספר יום או על קו כחול.</div>';
   } catch (error) {
     console.error(error);
-    document.getElementById('panel-content').innerHTML =
-      `<div class="error-message"><strong>לא ניתן לטעון את המפה.</strong><br>${escapeHtml(error.message)}</div>`;
+    showError(error && error.message ? error.message : 'שגיאה לא ידועה.');
   }
 }
 
-ensureGuideCard();
 map.on('click', resetActiveTrack);
 loadRoute();
