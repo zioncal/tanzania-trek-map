@@ -5,7 +5,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [36.6833, -3.3667]
+        "coordinates": [
+          36.6833,
+          -3.3667
+        ]
       },
       "properties": {
         "type": "site",
@@ -24,8 +27,14 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [36.6833, -3.3667],
-          [38.0833, -4.0500]
+          [
+            36.6833,
+            -3.3667
+          ],
+          [
+            38.0833,
+            -4.05
+          ]
         ]
       },
       "properties": {
@@ -44,7 +53,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [38.0833, -4.0500]
+        "coordinates": [
+          38.0833,
+          -4.05
+        ]
       },
       "properties": {
         "type": "site",
@@ -63,8 +75,14 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [38.0833, -4.0500],
-          [38.2144, -4.6125]
+          [
+            38.0833,
+            -4.05
+          ],
+          [
+            38.2144,
+            -4.6125
+          ]
         ]
       },
       "properties": {
@@ -83,7 +101,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [38.2144, -4.6125]
+        "coordinates": [
+          38.2144,
+          -4.6125
+        ]
       },
       "properties": {
         "type": "site",
@@ -102,8 +123,14 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [38.2144, -4.6125],
-          [38.3794, -4.7556]
+          [
+            38.2144,
+            -4.6125
+          ],
+          [
+            38.3794,
+            -4.7556
+          ]
         ]
       },
       "properties": {
@@ -122,7 +149,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [38.3794, -4.7556]
+        "coordinates": [
+          38.3794,
+          -4.7556
+        ]
       },
       "properties": {
         "type": "site",
@@ -141,8 +171,14 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [38.3794, -4.7556],
-          [38.2833, -4.8000]
+          [
+            38.3794,
+            -4.7556
+          ],
+          [
+            38.2833,
+            -4.8
+          ]
         ]
       },
       "properties": {
@@ -161,7 +197,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [38.2833, -4.8000]
+        "coordinates": [
+          38.2833,
+          -4.8
+        ]
       },
       "properties": {
         "type": "site",
@@ -180,8 +219,14 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [38.2833, -4.8000],
-          [38.2917, -4.8500]
+          [
+            38.2833,
+            -4.8
+          ],
+          [
+            38.2917,
+            -4.85
+          ]
         ]
       },
       "properties": {
@@ -200,7 +245,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [38.2917, -4.8500]
+        "coordinates": [
+          38.2917,
+          -4.85
+        ]
       },
       "properties": {
         "type": "site",
@@ -219,8 +267,14 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [38.2917, -4.8500],
-          [38.2944, -4.7828]
+          [
+            38.2917,
+            -4.85
+          ],
+          [
+            38.2944,
+            -4.7828
+          ]
         ]
       },
       "properties": {
@@ -239,7 +293,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [38.2944, -4.7828]
+        "coordinates": [
+          38.2944,
+          -4.7828
+        ]
       },
       "properties": {
         "type": "site",
@@ -258,8 +315,14 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [38.2944, -4.7828],
-          [39.0620, -5.0920]
+          [
+            38.2944,
+            -4.7828
+          ],
+          [
+            39.062,
+            -5.092
+          ]
         ]
       },
       "properties": {
@@ -278,7 +341,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [39.0620, -5.0920]
+        "coordinates": [
+          39.062,
+          -5.092
+        ]
       },
       "properties": {
         "type": "site",
@@ -297,20 +363,26 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [39.0620, -5.0920],
-          [39.0620, -5.0920]
+          [
+            39.062,
+            -5.092
+          ],
+          [
+            39.1,
+            -5.0667
+          ]
         ]
       },
       "properties": {
         "type": "track",
         "day": 9,
-        "title": "יום 9: יום נופש מלא בחוף טאנגה - Villa Matalai",
-        "distance": "0 ק\"מ (זמן חוף)",
+        "title": "יום 9: יום חוף וסיור מקומי באזור טאנגה",
+        "distance": "תנועה מקומית קצרה",
         "duration": "יום חופשי",
         "elevation": "גובה פני הים",
-        "description": "יום של רגיעה מוחלטת בווילה, סיורים עצמאיים על קו המים או מנוחה לקראת הטיסה לזנזיבר מחר.",
-        "link": "https://www.booking.com/hotel/tz/villa-matalai.he.html",
-        "link_text": "🏨 פרטי הווילה והחוף (Booking)"
+        "description": "יום מנוחה בחוף Villa Matalai, עם אפשרות לסיור קצר באזור טאנגה וחזרה למקום הלינה.",
+        "link": "https://en.wikipedia.org/wiki/Tanga,_Tanzania",
+        "link_text": "⚓ מידע על טאנגה והאזור"
       }
     },
     {
@@ -318,8 +390,14 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [39.0620, -5.0920],
-          [39.188980, -6.162080]
+          [
+            39.062,
+            -5.092
+          ],
+          [
+            39.18898,
+            -6.16208
+          ]
         ]
       },
       "properties": {
@@ -329,14 +407,19 @@
         "distance": "✈️ טיסת פנים",
         "duration": "חצי שעה",
         "elevation": "גובה פני הים",
-        "description": "טיסת פנים קצרה משדה התעופה של טנגה ישירות אל עיר האבן ההיסטורית של זנזיבר."
+        "description": "טיסת פנים קצרה משדה התעופה של טנגה ישירות אל עיר האבן ההיסטורית של זנזיבר.",
+        "link": "https://en.wikipedia.org/wiki/Stone_Town",
+        "link_text": "✈️ מידע על עיר האבן בזנזיבר"
       }
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [39.188980, -6.162080]
+        "coordinates": [
+          39.18898,
+          -6.16208
+        ]
       },
       "properties": {
         "type": "site",
@@ -355,8 +438,14 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [39.188980, -6.162080],
-          [36.6833, -3.3667]
+          [
+            39.18898,
+            -6.16208
+          ],
+          [
+            36.6833,
+            -3.3667
+          ]
         ]
       },
       "properties": {
