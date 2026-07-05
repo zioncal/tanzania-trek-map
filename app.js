@@ -1,381 +1,224 @@
-{
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [36.6833, -3.3667]
-      },
-      "properties": {
-        "type": "site",
-        "day": 1,
-        "title": "יום 1: נחיתה בטנזניה והתארגנות בארושה",
-        "distance": "55 ק\"מ (נסיעה משדה התעופה)",
-        "duration": "שעה וחצי נסיעה",
-        "elevation": "גובה: 1,400 מטר מעל פני הים",
-        "description": "נחיתה בשדה התעופה קילמנג'רו (JRO), העברה למלון בארושה והתארגנות לקראת היציאה לשטח. מפגש היכרות ותדרוך על המסלול.",
-        "link": "https://en.wikipedia.org/wiki/Arusha",
-        "link_text": "🌐 מידע גיאוגרפי והיסטורי על ארושה (Wikipedia)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [36.6833, -3.3667],
-          [38.0833, -4.0500]
-        ]
-      },
-      "properties": {
-        "type": "track",
-        "day": 2,
-        "title": "יום 2: ספארי בשמורת מקומאזי (Mkomazi) והמשך להרי האוסאמבארה",
-        "distance": "140 ק\"מ נסיעה + ספארי",
-        "duration": "כ-4 שעות נסיעה + 3 שעות ספארי",
-        "elevation": "עליה מ-1,400 מ' ל-1,600 מ' ברכב",
-        "description": "ספארי בשמורה הבתולית על רקע פסגת הקילימנג'רו לצפייה בפילים, קרנפים שחורים וטורפים. אחר הצהריים נמשיך בנסיעה ונעלה אל רכס הרי האוסאמבארה.",
-        "link": "https://tanzania-specialist.com/national-parks/mkomazi-national-park/",
-        "link_text": "🐾 מידע רשמי ומדריך חיות בר לשמורת מקומאזי"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [38.0833, -4.0500]
-      },
-      "properties": {
-        "type": "site",
-        "day": 2,
-        "title": "יום 2: הגעה לחווה חקלאית פסטורלית (Lushoto)",
-        "distance": "הגעה לנקודת הלינה",
-        "duration": "0 שעות הליכה",
-        "elevation": "גובה: 1,600 מטר",
-        "description": "לקראת ערב נגיע למקום הלינה בחווה ירוקה ופסטורלית בלב הטבע להתארגנות לקראת תחילת המקטעים הרגליים.",
-        "link": "https://www.mamboviewpoint.org/",
-        "link_text": "🏡 אתר האירוח Mambo View Point Eco Lodge"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [38.0833, -4.0500],
-          [38.2144, -4.6125]
-        ]
-      },
-      "properties": {
-        "type": "track",
-        "day": 3,
-        "title": "יום 3: טרק למפלי Kidhege ולינה ב-Mambo View Point",
-        "distance": "18 ק\"מ הליכה",
-        "duration": "5–6 שעות הליכה נטו",
-        "elevation": "עלייה מצטברת: 750 מטר (שיא גובה: 1,950 מ')",
-        "description": "הליכה בין שרכי ענק ועצי בראשית אל מפלי Kidhege בלב הג'ונגל. תצפיות על קופי קולובוס בשולי היער. סיום בעלייה חדה אל המצוק הגבוה.",
-        "link": "https://www.journeyera.com/kidhege-waterfall-shagayu-forest/",
-        "link_text": "🌊 מידע על מסלולי הליכה סביב מפלי האוסאמבארה"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [38.2144, -4.6125]
-      },
-      "properties": {
-        "type": "site",
-        "day": 3,
-        "title": "יום 3: לינה ב-Mambo View Point Eco Lodge",
-        "distance": "סיום מקטע הליכה",
-        "duration": "הגעה אחה\"צ",
-        "elevation": "גובה: 1,950 מטר",
-        "description": "התמקמות במתחם האקולוגי הייחודי Mambo View Point השוכן על שפת מצוק אדיר ומספק תצפיות פנורמיות מרהיבות לעבר העמקים והסוואנה.",
-        "link": "https://plcnetwork.co.za/member/116/Mambo-View-Point-Eco-Lodge/",
-        "link_text": "⛰️ אתר הבית של Mambo View Point"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [38.2144, -4.6125],
-          [38.3794, -4.7556]
-        ]
-      },
-      "properties": {
-        "type": "track",
-        "day": 4,
-        "title": "יום 4: ממומבו ויו פוינט אל מנזר רנגווי (Rangwi Convent)",
-        "distance": "13.5 ק\"מ הליכה",
-        "duration": "4–5 שעות הליכה",
-        "elevation": "עלייה: 460 מטר, ירידה: 380 מטר",
-        "description": "הליכה לאורך וואדיות וכפרים הרריים. פגישה עם מקומיים בדרכם לשווקים ולבתי הספר. חיפוש אחר זיקית האוסאמבארה בעלת שלוש הקרניים.",
-        "link": "https://en.wikipedia.org/wiki/Usambara_Mountains",
-        "link_text": "🦎 מדריך הטבע והמגוון הביולוגי של רכס האוסאמבארה"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [38.3794, -4.7556]
-      },
-      "properties": {
-        "type": "site",
-        "day": 4,
-        "title": "יום 4: לינה במנזר Rangwi Convent",
-        "distance": "סיום מקטע הליכה",
-        "duration": "הגעה לקראת ערב",
-        "elevation": "גובה: 1,720 מטר",
-        "description": "אירוח ולינה חווייתית במנזר רנגווי הצנוע וההיסטורי, המספק הצצה לחיי הנזירות המקומית והשקעות פיתוח חקלאיות באזור.",
-        "link": "http://www.africanparaiso.com/accommodation/rangwi-convent-guesthouse/",
-        "link_text": "⛪ פרטי אירוח ומדריך לינה במנזר רנגווי"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [38.3794, -4.7556],
-          [38.2833, -4.8000]
-        ]
-      },
-      "properties": {
-        "type": "track",
-        "day": 5,
-        "title": "יום 5: צעידה בין חלקות חקלאיות ומסעדה כפרית",
-        "distance": "12 ק\"מ הליכה",
-        "duration": "4 שעות הליכה",
-        "elevation": "עלייה: 400 מטר, ירידה: 300 מטר",
-        "description": "הליכה בין טרסות חקלאיות מסורתיות בהרים. עצירה לארוחת צהריים אותנטית במסעדה כפרית מקומית ושיחות עם חקלאי האזור.",
-        "link": "https://travelwithrachel.co.il/tours/crops-in-tanzania-corn-and-banana-plantations/",
-        "link_text": "🍲 סקירה תרבותית על חקלאות ומזון הררי בטנזניה"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [38.2833, -4.8000]
-      },
-      "properties": {
-        "type": "site",
-        "day": 5,
-        "title": "יום 5: לינה באזור כפרי באוסאמבארה (Lushoto Highlands)",
-        "distance": "הגעה בסוף מקטע ההליכה",
-        "duration": "אחר הצהריים",
-        "elevation": "גובה: 1,650 מטר",
-        "description": "הגעה למקום הלינה כפרי בסיום הצעידה. מנוחה, ארוחת ערב חמה ממוצרים מקומיים שנשלו מהשדות הסמוכים והתארגנות ליום המחרת.",
-        "link": "https://www.casai.com/property/latitude-lukozi-hotel/BC-13246621",
-        "link_text": "🏡 פרטי לינה ובקתות הרים באזור לושוטו"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [38.2833, -4.8000],
-          [38.2917, -4.8500]
-        ]
-      },
-      "properties": {
-        "type": "track",
-        "day": 6,
-        "title": "יום 6: מעבר ביער קדום וביקור בשוק המקומי הישן",
-        "distance": "19 ק\"מ הליכה",
-        "duration": "6–7 שעות הליכה (ניתן לקצר)",
-        "elevation": "עלייה: 800 מטר, ירידה: 650 מטר",
-        "description": "יום הליכה מאתגר דרך שמורת יער גשם קדמונית, המלאה בצמחייה אנדמית. ביקור בשוק שבועי צבעוני. הגעה ללודג' הררי בסיום המסלול.",
-        "link": "https://mapcarta.com/12652584",
-        "link_text": "🌿 מידע על מסלול ההליכה Lukozi אל Mkuzi"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [38.2917, -4.8500]
-      },
-      "properties": {
-        "type": "site",
-        "day": 6,
-        "title": "יום 6: לינה בלודג' הררי מפנק (Müller's Mountain Lodge)",
-        "distance": "הגעה בסוף מסלול הליכה ארוך",
-        "duration": "הגעה לקראת ערב",
-        "elevation": "גובה: 1,700 מטר",
-        "description": "לינה והתרעננות ב-Müller's Mountain Lodge בלב אזור מיוער ושקט. מקום מושלם להרפיית השרירים אחרי הצעידה הארוכה ביותר בטרק.",
-        "link": "https://www.exploretanzania.nl/en/properties/mullers-mountain-lodge/",
-        "link_text": "🏡 אתר המידע והזמנות ל-Müller's Mountain Lodge"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [38.2917, -4.8500],
-          [38.2944, -4.7828]
-        ]
-      },
-      "properties": {
-        "type": "track",
-        "day": 7,
-        "title": "יום 7: מהג'ונגל אל עיר הבירה המלכותית לושוטו (Lushoto)",
-        "distance": "15 ק\"מ הליכה",
-        "duration": "5 שעות הליכה",
-        "elevation": "ירידה מצטברת: 400 מטר",
-        "description": "צעידה במעבה הג'ונגל תחת חופת עצים ענקית המגנה מפני השמש, ויציאה לקו הרכס המשקיף לעבר לושוטו - בירת הרכס המרכזית (1,400 מ').",
-        "link": "https://www.safari.co.za/Tanzania_Travel_Guide-travel/lushoto-and-the-usambara-mountains.html",
-        "link_text": "🏡 מידע על הדרך מ-Mkuzi אל לוּשוֹטוֹ"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [38.2944, -4.7828]
-      },
-      "properties": {
-        "type": "site",
-        "day": 7,
-        "title": "יום 7: לינה בעיר המחוז לושוטו (Jua Zuri Home)",
-        "distance": "הגעה בסיום מקטע הג'ונגל",
-        "duration": "אחר הצהריים",
-        "elevation": "גובה: 1,400 מטר",
-        "description": "הגעה ללושוטו, עיר הבירה התרבותית של הרי האוסאמבארה. התמקמות בבית ההארחה האותנטי Jua Zuri Home, מנוחה וזמן סיור בעיירה הקולוניאלית ההיסטורית.",
-        "link": "https://www.bedandbreakfast.eu/en/a/bPT4mmz0dMF1/jua-zuri",
-        "link_text": "🏡 סקירה ותמונות מבית ההארחה Jua Zuri בלושוטו"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [38.2944, -4.7828],
-          [39.0620, -5.0920]
-        ]
-      },
-      "properties": {
-        "type": "track",
-        "day": 8,
-        "title": "יום 8: ירידה מהרי האוסאמבארה אל חוף טאנגה ולינה ב-Villa Matalai",
-        "distance": "115 ק\"מ נסיעה",
-        "duration": "כ-3 שעות נסיעה",
-        "elevation": "ירידה חדה מגובה 1,400 מ' לגובה פני הים (0 מ')",
-        "description": "נפרדים מאוויר ההרים ויורדים בנסיעה אל רצועת החוף של עיר הנמל טאנגה. הגעה והתמקמות בלודג' האירוח האקסקלוסיבי Villa Matalai השוכן על קו המים.",
-        "link": "https://www.booking.com/hotel/tz/villa-matalai.he.html",
-        "link_text": "🏨 לחץ לצפייה ב-Villa Matalai בחוף טאנגה (Booking)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [39.0620, -5.0920]
-      },
-      "properties": {
-        "type": "site",
-        "day": 8,
-        "title": "יום 8 & 9: לינה במלון Villa Matalai - חוף טאנגה",
-        "distance": "סיום הטרק ההררי",
-        "duration": "הגעה אחה\"צ והתמקמות",
-        "elevation": "גובה: פני הים (0 מ')",
-        "description": "מתחם אירוח יפהפה על חוף האוקיינוס ההודי בטאנגה. הלינה בימים 8 ו-9 מתוכננת כאן כדי לאפשר מנוחה מוחלטת, שחייה בבריכה, וארוחות טרופיות מעולות מול קו המים בסגנון סוואהילי.",
-        "link": "https://www.booking.com/hotel/tz/villa-matalai.he.html",
-        "link_text": "🏖️ פרטי החדרים והזמנות ל-Villa Matalai (Booking)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [39.0620, -5.0920],
-          [39.0620, -5.0920]
-        ]
-      },
-      "properties": {
-        "type": "track",
-        "day": 9,
-        "title": "יום 9: יום נופש מלא בחוף טאנגה - Villa Matalai",
-        "distance": "0 ק\"מ (זמן חוף)",
-        "duration": "יום חופשי",
-        "elevation": "גובה פני הים",
-        "description": "יום של רגיעה מוחלטת בווילה, סיורים עצמאיים על קו המים או מנוחה לקראת הטיסה לזנזיבר מחר.",
-        "link": "https://www.booking.com/hotel/tz/villa-matalai.he.html",
-        "link_text": "🏨 פרטי הווילה והחוף (Booking)"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [39.0620, -5.0920],
-          [39.188980, -6.162080]
-        ]
-      },
-      "properties": {
-        "type": "track",
-        "day": 10,
-        "title": "יום 10: מחוף טנגה לזנזיבר עיר האבן",
-        "distance": "✈️ טיסת פנים",
-        "duration": "חצי שעה",
-        "elevation": "גובה פני הים",
-        "description": "טיסת פנים קצרה משדה התעופה של טנגה ישירות אל עיר האבן ההיסטורית של זנזיבר."
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [39.188980, -6.162080]
-      },
-      "properties": {
-        "type": "site",
-        "day": 11,
-        "title": "יום 11: עיר האבן זנזיבר (Stone Town)",
-        "distance": "סיור עירוני רגלי",
-        "duration": "חצי יום",
-        "elevation": "פני הים",
-        "description": "סיור מרתק בין הסמטאות הצרות, הארכיטקטורה הייחודית והשווקים של עיר האבן העתיקה.",
-        "links": [
-          {
-            "url": "https://en.wikipedia.org/wiki/Stone_Town",
-            "text": "🕌 רקע על עיר האבן (Wikipedia)"
-          },
-          {
-            "url": "https://www.booking.com/hotel/tz/zanzibar-coffee-house.he.html",
-            "text": "🏨 מידע והזמנות חדרים ב-Zanzibar Coffee House (Booking)"
-          }
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "LineString",
-        "coordinates": [
-          [39.188980, -6.162080],
-          [36.6833, -3.3667]
-        ]
-      },
-      "properties": {
-        "type": "track",
-        "day": 11,
-        "title": "יום 11: פרידה מזנזיבר וחזרה לישראל",
-        "distance": "טיסות בינלאומיות",
-        "duration": "מעבר שדות תעופה",
-        "elevation": "טיסה חזרה",
-        "description": "בוקר אחרון של רגיעה מול מי הטורקיז, העברה לשדה התעופה של זנזיבר וטיסה חזרה לישראל לסיום המסע המרתק."
-      }
-    }
-  ]
+'use strict';
+
+const DEFAULT_VIEW = [-4.5, 38.5];
+const DEFAULT_ZOOM = 7;
+const TRACK_COLOR = '#1877c9';
+const TRACK_ACTIVE_COLOR = '#e76f35';
+const SITE_COLOR = '#15965d';
+
+const mapElement = document.getElementById('map');
+const panelElement = document.getElementById('panel-content');
+
+if (!mapElement || !panelElement || typeof L === 'undefined') {
+  throw new Error('Leaflet או רכיבי המפה לא נטענו כראוי.');
 }
+
+const map = L.map(mapElement, {
+  zoomControl: false,
+  tap: true
+}).setView(DEFAULT_VIEW, DEFAULT_ZOOM);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+L.control.zoom({ position: 'topleft' }).addTo(map);
+L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
+
+map.createPane('tracksPane');
+map.getPane('tracksPane').style.zIndex = '410';
+map.createPane('trackHitsPane');
+map.getPane('trackHitsPane').style.zIndex = '420';
+map.createPane('sitesPane');
+map.getPane('sitesPane').style.zIndex = '650';
+
+const boundsGroup = L.featureGroup().addTo(map);
+let activeTrack = null;
+
+function escapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function safeExternalUrl(value) {
+  if (!value) return '';
+  try {
+    const url = new URL(value, window.location.href);
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : '';
+  } catch (error) {
+    return '';
+  }
+}
+
+function getLinks(properties) {
+  const links = [];
+
+  if (Array.isArray(properties.links)) {
+    properties.links.forEach(function (item) {
+      if (!item || typeof item !== 'object') return;
+      const url = safeExternalUrl(item.url);
+      if (url) links.push({ url: url, text: item.text || 'מידע נוסף' });
+    });
+  }
+
+  if (links.length === 0) {
+    const url = safeExternalUrl(properties.link);
+    if (url) links.push({ url: url, text: properties.link_text || 'מידע נוסף' });
+  }
+
+  return links;
+}
+
+function buildLinksHtml(properties) {
+  const links = getLinks(properties);
+  if (links.length === 0) return '';
+
+  return '<div class="external-links">' + links.map(function (item) {
+    return '<a class="external-link" href="' + escapeHtml(item.url) +
+      '" target="_blank" rel="noopener noreferrer">' +
+      escapeHtml(item.text) + '</a>';
+  }).join('') + '</div>';
+}
+
+function updatePanel(properties) {
+  properties = properties || {};
+  const day = properties.day !== undefined && properties.day !== null
+    ? '<span class="day-badge">יום ' + escapeHtml(properties.day) + '</span>'
+    : '';
+
+  panelElement.innerHTML =
+    day +
+    '<h2>' + escapeHtml(properties.title || 'מידע על המסלול') + '</h2>' +
+    '<div class="meta-info">📏 <strong>מרחק:</strong> ' + escapeHtml(properties.distance || 'לא צוין') + '</div>' +
+    '<div class="meta-info">⏱️ <strong>זמן משוער:</strong> ' + escapeHtml(properties.duration || 'לא צוין') + '</div>' +
+    '<div class="meta-info">⛰️ <strong>גובה:</strong> ' + escapeHtml(properties.elevation || 'לא צוין') + '</div>' +
+    '<div class="desc">' + escapeHtml(properties.description || 'אין תיאור זמין.') + '</div>' +
+    buildLinksHtml(properties);
+}
+
+function showError(message) {
+  panelElement.innerHTML =
+    '<div class="error-message"><strong>לא ניתן לטעון את המפה.</strong><br>' +
+    escapeHtml(message) + '<br><br>ודא ששלושת הקבצים נמצאים באותה תיקייה ובשמות המדויקים.</div>';
+}
+
+function resetActiveTrack() {
+  if (!activeTrack) return;
+  activeTrack.setStyle({ color: TRACK_COLOR, weight: 5, opacity: 0.9 });
+  activeTrack = null;
+}
+
+function addTrackFeature(feature) {
+  const coordinates = feature.geometry.coordinates;
+  if (!Array.isArray(coordinates) || coordinates.length < 2) return;
+
+  const latLngs = coordinates.map(function (coord) {
+    return [coord[1], coord[0]];
+  });
+
+  const visibleLine = L.polyline(latLngs, {
+    pane: 'tracksPane',
+    color: TRACK_COLOR,
+    weight: 5,
+    opacity: 0.9,
+    lineCap: 'round',
+    lineJoin: 'round'
+  }).addTo(map);
+
+  const hitLine = L.polyline(latLngs, {
+    pane: 'trackHitsPane',
+    color: '#000000',
+    weight: 24,
+    opacity: 0,
+    bubblingMouseEvents: false
+  }).addTo(map);
+
+  boundsGroup.addLayer(visibleLine);
+
+  function selectTrack(event) {
+    resetActiveTrack();
+    activeTrack = visibleLine;
+    visibleLine.setStyle({ color: TRACK_ACTIVE_COLOR, weight: 7, opacity: 1 });
+    updatePanel(feature.properties || {});
+    if (event) L.DomEvent.stopPropagation(event);
+  }
+
+  visibleLine.on('click', selectTrack);
+  hitLine.on('click', selectTrack);
+  hitLine.bindTooltip('יום ' + escapeHtml((feature.properties || {}).day || '') + ' – לחץ לפרטים', {
+    sticky: true,
+    direction: 'top'
+  });
+}
+
+function addSiteFeature(feature) {
+  const coordinates = feature.geometry.coordinates;
+  if (!Array.isArray(coordinates) || coordinates.length < 2) return;
+
+  const properties = feature.properties || {};
+  const dayText = properties.day == null ? '' : String(properties.day);
+
+  const marker = L.marker([coordinates[1], coordinates[0]], {
+    pane: 'sitesPane',
+    bubblingMouseEvents: false,
+    icon: L.divIcon({
+      className: 'day-marker-wrapper',
+      html: '<div class="day-marker">' + escapeHtml(dayText) + '</div>',
+      iconSize: [34, 34],
+      iconAnchor: [17, 17]
+    })
+  }).addTo(map);
+
+  boundsGroup.addLayer(marker);
+
+  marker.on('click', function (event) {
+    resetActiveTrack();
+    updatePanel(properties);
+    L.DomEvent.stopPropagation(event);
+  });
+
+  marker.bindTooltip(escapeHtml(properties.title || 'אתר במסלול'), {
+    direction: 'top',
+    offset: [0, -17]
+  });
+}
+
+async function loadRoute() {
+  try {
+    const response = await fetch('./safari_path.geojson?v=20260702', { cache: 'no-store' });
+    if (!response.ok) throw new Error('שגיאת שרת ' + response.status + ' בעת טעינת safari_path.geojson');
+
+    const data = await response.json();
+    if (data.type !== 'FeatureCollection' || !Array.isArray(data.features)) {
+      throw new Error('מבנה קובץ ה-GeoJSON אינו FeatureCollection תקין.');
+    }
+
+    const tracks = data.features.filter(function (feature) {
+      return feature.geometry && feature.geometry.type === 'LineString' &&
+        feature.properties && feature.properties.type === 'track';
+    });
+    const sites = data.features.filter(function (feature) {
+      return feature.geometry && feature.geometry.type === 'Point' &&
+        feature.properties && feature.properties.type === 'site';
+    });
+
+    tracks.forEach(addTrackFeature);
+    sites.forEach(addSiteFeature);
+
+    if (boundsGroup.getLayers().length === 0) throw new Error('לא נמצאו שכבות להצגה.');
+
+    map.fitBounds(boundsGroup.getBounds(), { padding: [35, 35], maxZoom: 10 });
+    panelElement.innerHTML = '<div class="placeholder">המפה מוכנה.<br>לחץ על מספר יום או על קו כחול.</div>';
+  } catch (error) {
+    console.error(error);
+    showError(error && error.message ? error.message : 'שגיאה לא ידועה.');
+  }
+}
+
+map.on('click', resetActiveTrack);
+loadRoute();
