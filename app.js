@@ -190,7 +190,7 @@ function addSiteFeature(feature) {
 
 async function loadRoute() {
   try {
-    const response = await fetch('./safari_path.geojson?v=20260702', { cache: 'no-store' });
+    const response = await fetch('./safari_path.geojson?v=20260716', { cache: 'no-store' });
     if (!response.ok) throw new Error('שגיאת שרת ' + response.status + ' בעת טעינת safari_path.geojson');
 
     const data = await response.json();
@@ -222,3 +222,31 @@ async function loadRoute() {
 
 map.on('click', resetActiveTrack);
 loadRoute();
+
+(function setupGuideCard() {
+  const card = document.getElementById('guide-card');
+  const closeBtn = document.getElementById('guide-close-btn');
+  const reopenBtn = document.getElementById('guide-reopen-btn');
+  if (!card || !closeBtn || !reopenBtn) return;
+
+  const STORAGE_KEY = 'guideCardDismissed';
+
+  function closeCard() {
+    card.style.display = 'none';
+    reopenBtn.style.display = 'flex';
+    try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+  }
+
+  function openCard() {
+    card.style.display = 'block';
+    reopenBtn.style.display = 'none';
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  }
+
+  let dismissed = false;
+  try { dismissed = localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
+  if (dismissed) closeCard();
+
+  closeBtn.addEventListener('click', closeCard);
+  reopenBtn.addEventListener('click', openCard);
+})();
