@@ -109,12 +109,40 @@ async function openGpxInline(url) {
   }
 }
 
+async function shareGpxFile(url) {
+  try {
+    const response = await fetch(url, { cache: 'no-store' });
+    if (!response.ok) throw new Error('שגיאת שרת ' + response.status);
+    const blob = await response.blob();
+    const filename = url.split('/').pop().split('?')[0] || 'track.gpx';
+    const file = new File([blob], filename, { type: 'application/gpx+xml' });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title: filename });
+      return true;
+    }
+  } catch (error) {
+    if (error && error.name === 'AbortError') return true; // המשתמש סגר את גיליון השיתוף בעצמו
+    console.error(error);
+  }
+  return false;
+}
+
 panelElement.addEventListener('click', function (event) {
   const link = event.target.closest('a.gpx-link');
   if (!link) return;
-  if (isMobileDevice()) return; // בנייד משאירים את ההתנהגות הטבעית של הדפדפן/מערכת ההפעלה (בורר "פתח באמצעות")
+  const url = link.getAttribute('href');
+
+  if (isMobileDevice()) {
+    event.preventDefault();
+    shareGpxFile(url).then(function (shared) {
+      if (!shared) window.location.href = url; // נפילה חזרה להורדה רגילה אם השיתוף לא נתמך
+    });
+    return;
+  }
+
   event.preventDefault();
-  openGpxInline(link.getAttribute('href'));
+  openGpxInline(url);
 });
 
 function updatePanel(properties) {
@@ -222,7 +250,7 @@ function addSiteFeature(feature) {
 
 async function loadRoute() {
   try {
-    const response = await fetch('./safari_path.geojson?v=20260802b', { cache: 'no-store' });
+    const response = await fetch('./safari_path.geojson?v=20260802c', { cache: 'no-store' });
     if (!response.ok) throw new Error('שגיאת שרת ' + response.status + ' בעת טעינת safari_path.geojson');
 
     const data = await response.json();
