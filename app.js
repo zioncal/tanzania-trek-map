@@ -87,6 +87,10 @@ function buildLinksHtml(properties) {
   }).join('') + '</div>';
 }
 
+function isMobileDevice() {
+  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
 async function openGpxInline(url) {
   try {
     const response = await fetch(url, { cache: 'no-store' });
@@ -108,6 +112,7 @@ async function openGpxInline(url) {
 panelElement.addEventListener('click', function (event) {
   const link = event.target.closest('a.gpx-link');
   if (!link) return;
+  if (isMobileDevice()) return; // בנייד משאירים את ההתנהגות הטבעית של הדפדפן/מערכת ההפעלה (בורר "פתח באמצעות")
   event.preventDefault();
   openGpxInline(link.getAttribute('href'));
 });
@@ -217,7 +222,7 @@ function addSiteFeature(feature) {
 
 async function loadRoute() {
   try {
-    const response = await fetch('./safari_path.geojson?v=20260802', { cache: 'no-store' });
+    const response = await fetch('./safari_path.geojson?v=20260802b', { cache: 'no-store' });
     if (!response.ok) throw new Error('שגיאת שרת ' + response.status + ' בעת טעינת safari_path.geojson');
 
     const data = await response.json();
