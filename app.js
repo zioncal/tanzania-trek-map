@@ -1,96 +1,257 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="מפה אינטראקטיבית למסלול טיול בטנזניה ובזנזיבר">
-  <title>מפת הטיול בטנזניה ובזנזיבר</title>
+'use strict';
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+const DEFAULT_VIEW = [-4.5, 38.5];
+const DEFAULT_ZOOM = 7;
+const TRACK_COLOR = '#1877c9';
+const TRACK_ACTIVE_COLOR = '#e76f35';
+const SITE_COLOR = '#15965d';
 
-  <style>
-    :root { --panel-width: 430px; --blue:#1877c9; --green:#15965d; --green-dark:#0f7248; --text:#263645; }
-    * { box-sizing: border-box; }
-    html, body { width:100%; height:100%; margin:0; }
-    body { display:flex; direction:ltr; overflow:hidden; font-family:Arial,"Noto Sans Hebrew",sans-serif; background:#eef2f5; color:var(--text); }
-    #map { flex:1; min-width:0; height:100%; }
-    #info-panel { direction:rtl; flex:0 0 var(--panel-width); width:var(--panel-width); height:100%; overflow-y:auto; padding:20px; background:#fff; border-left:1px solid #d8e0e6; box-shadow:-4px 0 18px rgba(0,0,0,.12); z-index:1000; }
-    .panel-title { margin:0 0 7px; color:#0f4f8a; font-size:25px; }
-    .panel-subtitle { margin:0 0 16px; color:#657786; font-size:14px; line-height:1.55; }
-    .guide-card { position:relative; display:block; margin:0 0 18px; padding:16px; background:#f5f0e5; border-right:5px solid var(--green); border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,.07); }
-    .guide-card h2 { margin:0 0 10px; color:#1f5d45; font-size:20px; }
-    .guide-card p { margin:0 0 9px; line-height:1.65; font-size:14px; }
-    .guide-card blockquote { margin:12px 0 0; padding:11px 13px; background:#fff; border-right:3px solid #90b7a2; border-radius:8px; font-style:italic; line-height:1.65; font-size:14px; }
-    #panel-content h2 { margin:0 0 14px; font-size:20px; line-height:1.35; }
-    .day-badge { display:inline-block; margin-bottom:10px; padding:5px 10px; color:#fff; background:var(--blue); border-radius:999px; font-size:13px; font-weight:bold; }
-    .meta-info { margin-bottom:8px; padding:9px 11px; background:#f4f7f9; border-radius:8px; font-size:14px; }
-    .desc { margin-top:14px; line-height:1.65; font-size:15px; }
-    .external-links { display:flex; flex-direction:column; gap:9px; margin-top:17px; }
-    .external-link { display:block; padding:10px 14px; color:#fff; background:var(--green); border-radius:8px; text-align:center; text-decoration:none; font-weight:bold; line-height:1.4; }
-    .external-link:hover { background:var(--green-dark); }
-    .placeholder,.error-message { margin-top:15px; padding:17px; border-radius:10px; line-height:1.65; text-align:center; }
-    .placeholder { background:#f4f7f9; color:#647786; }
-    .error-message { background:#fdecea; color:#8b2c1f; text-align:right; }
-    .legend { margin-top:20px; padding-top:15px; border-top:1px solid #e0e6ea; color:#5e7180; font-size:13px; line-height:1.9; }
-    .legend-dot,.legend-line { display:inline-block; margin-left:7px; vertical-align:middle; }
-    .legend-dot { width:18px; height:18px; background:var(--green); border:2px solid #fff; border-radius:50%; box-shadow:0 0 0 1px var(--green); }
-    .legend-line { width:25px; height:4px; background:var(--blue); border-radius:5px; }
-    .guide-close-btn {
-      position: absolute; top: 10px; left: 10px;
-      width: 26px; height: 26px; border: 0; border-radius: 50%;
-      background: rgba(255,255,255,.6); color: #1f5d45;
-      font-size: 16px; line-height: 1; cursor: pointer;
+const mapElement = document.getElementById('map');
+const panelElement = document.getElementById('panel-content');
+
+if (!mapElement || !panelElement || typeof L === 'undefined') {
+  throw new Error('Leaflet או רכיבי המפה לא נטענו כראוי.');
+}
+
+const map = L.map(mapElement, {
+  zoomControl: false,
+  tap: true
+}).setView(DEFAULT_VIEW, DEFAULT_ZOOM);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+L.control.zoom({ position: 'topleft' }).addTo(map);
+L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
+
+map.createPane('tracksPane');
+map.getPane('tracksPane').style.zIndex = '410';
+map.createPane('trackHitsPane');
+map.getPane('trackHitsPane').style.zIndex = '420';
+map.createPane('sitesPane');
+map.getPane('sitesPane').style.zIndex = '650';
+
+const boundsGroup = L.featureGroup().addTo(map);
+let activeTrack = null;
+
+function escapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function safeExternalUrl(value) {
+  if (!value) return '';
+  try {
+    const url = new URL(value, window.location.href);
+    return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : '';
+  } catch (error) {
+    return '';
+  }
+}
+
+function getLinks(properties) {
+  const links = [];
+
+  if (Array.isArray(properties.links)) {
+    properties.links.forEach(function (item) {
+      if (!item || typeof item !== 'object') return;
+      const url = safeExternalUrl(item.url);
+      if (url) links.push({ url: url, text: item.text || 'מידע נוסף' });
+    });
+  }
+
+  if (links.length === 0) {
+    const url = safeExternalUrl(properties.link);
+    if (url) links.push({ url: url, text: properties.link_text || 'מידע נוסף' });
+  }
+
+  return links;
+}
+
+function buildLinksHtml(properties) {
+  const links = getLinks(properties);
+  if (links.length === 0) return '';
+
+  return '<div class="external-links">' + links.map(function (item) {
+    const isGpx = /\.gpx(\?.*)?$/i.test(item.url);
+    const cls = isGpx ? 'external-link gpx-link' : 'external-link';
+    const downloadAttr = isGpx
+      ? ' download="' + escapeHtml(item.url.split('/').pop().split('?')[0]) + '"'
+      : '';
+    return '<a class="' + cls + '" href="' + escapeHtml(item.url) +
+      '" target="_blank" rel="noopener noreferrer"' + downloadAttr + '>' +
+      escapeHtml(item.text) + '</a>';
+  }).join('') + '</div>';
+}
+
+function updatePanel(properties) {
+  properties = properties || {};
+  const day = properties.day !== undefined && properties.day !== null
+    ? '<span class="day-badge">יום ' + escapeHtml(properties.day) + '</span>'
+    : '';
+
+  panelElement.innerHTML =
+    day +
+    '<h2>' + escapeHtml(properties.title || 'מידע על המסלול') + '</h2>' +
+    '<div class="meta-info">📏 <strong>מרחק:</strong> ' + escapeHtml(properties.distance || 'לא צוין') + '</div>' +
+    '<div class="meta-info">⏱️ <strong>זמן משוער:</strong> ' + escapeHtml(properties.duration || 'לא צוין') + '</div>' +
+    '<div class="meta-info">⛰️ <strong>גובה:</strong> ' + escapeHtml(properties.elevation || 'לא צוין') + '</div>' +
+    '<div class="desc">' + escapeHtml(properties.description || 'אין תיאור זמין.') + '</div>' +
+    buildLinksHtml(properties);
+}
+
+function showError(message) {
+  panelElement.innerHTML =
+    '<div class="error-message"><strong>לא ניתן לטעון את המפה.</strong><br>' +
+    escapeHtml(message) + '<br><br>ודא ששלושת הקבצים נמצאים באותה תיקייה ובשמות המדויקים.</div>';
+}
+
+function resetActiveTrack() {
+  if (!activeTrack) return;
+  activeTrack.setStyle({ color: TRACK_COLOR, weight: 5, opacity: 0.9 });
+  activeTrack = null;
+}
+
+function addTrackFeature(feature) {
+  const coordinates = feature.geometry.coordinates;
+  if (!Array.isArray(coordinates) || coordinates.length < 2) return;
+
+  const latLngs = coordinates.map(function (coord) {
+    return [coord[1], coord[0]];
+  });
+
+  const visibleLine = L.polyline(latLngs, {
+    pane: 'tracksPane',
+    color: TRACK_COLOR,
+    weight: 5,
+    opacity: 0.9,
+    lineCap: 'round',
+    lineJoin: 'round'
+  }).addTo(map);
+
+  const hitLine = L.polyline(latLngs, {
+    pane: 'trackHitsPane',
+    color: '#000000',
+    weight: 24,
+    opacity: 0,
+    bubblingMouseEvents: false
+  }).addTo(map);
+
+  boundsGroup.addLayer(visibleLine);
+
+  function selectTrack(event) {
+    resetActiveTrack();
+    activeTrack = visibleLine;
+    visibleLine.setStyle({ color: TRACK_ACTIVE_COLOR, weight: 7, opacity: 1 });
+    updatePanel(feature.properties || {});
+    if (event) L.DomEvent.stopPropagation(event);
+  }
+
+  visibleLine.on('click', selectTrack);
+  hitLine.on('click', selectTrack);
+  hitLine.bindTooltip('יום ' + escapeHtml((feature.properties || {}).day || '') + ' – לחץ לפרטים', {
+    sticky: true,
+    direction: 'top'
+  });
+}
+
+function addSiteFeature(feature) {
+  const coordinates = feature.geometry.coordinates;
+  if (!Array.isArray(coordinates) || coordinates.length < 2) return;
+
+  const properties = feature.properties || {};
+  const dayText = properties.day == null ? '' : String(properties.day);
+
+  const marker = L.marker([coordinates[1], coordinates[0]], {
+    pane: 'sitesPane',
+    bubblingMouseEvents: false,
+    icon: L.divIcon({
+      className: 'day-marker-wrapper',
+      html: '<div class="day-marker">' + escapeHtml(dayText) + '</div>',
+      iconSize: [34, 34],
+      iconAnchor: [17, 17]
+    })
+  }).addTo(map);
+
+  boundsGroup.addLayer(marker);
+
+  marker.on('click', function (event) {
+    resetActiveTrack();
+    updatePanel(properties);
+    L.DomEvent.stopPropagation(event);
+  });
+
+  marker.bindTooltip(escapeHtml(properties.title || 'אתר במסלול'), {
+    direction: 'top',
+    offset: [0, -17]
+  });
+}
+
+async function loadRoute() {
+  try {
+    const response = await fetch('./safari_path.geojson?v=20260802e', { cache: 'no-store' });
+    if (!response.ok) throw new Error('שגיאת שרת ' + response.status + ' בעת טעינת safari_path.geojson');
+
+    const data = await response.json();
+    if (data.type !== 'FeatureCollection' || !Array.isArray(data.features)) {
+      throw new Error('מבנה קובץ ה-GeoJSON אינו FeatureCollection תקין.');
     }
-    .guide-close-btn:hover { background: #fff; }
-    .guide-reopen-btn {
-      display: none; align-items: center; gap: 6px; margin: 0 0 18px;
-      padding: 9px 14px; border: 1px solid #d8e0e6; border-radius: 999px;
-      background: #f5f0e5; color: #1f5d45; font-size: 13px; font-weight: bold;
-      cursor: pointer;
-    }
-    .guide-reopen-btn:hover { background: #efe6d2; }
-    .day-marker-wrapper { background:transparent; border:0; }
-    .day-marker { width:34px; height:34px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:var(--green); color:#fff; border:3px solid #fff; box-shadow:0 1px 6px rgba(0,0,0,.45); font-size:13px; font-weight:bold; cursor:pointer; }
-    .day-marker:hover { transform:scale(1.12); background:#e76f35; }
-    @media (max-width:768px) {
-      body { display:block; }
-      #map { position:absolute; inset:0; width:100%; height:100%; }
-      #info-panel { position:absolute; right:3%; bottom:12px; left:3%; width:94%; height:auto; max-height:50vh; padding:14px; border-radius:14px; border:0; background:rgba(255,255,255,.97); }
-      .guide-card { padding:12px; }
-      .guide-card p,.guide-card blockquote { font-size:12px; }
-      .panel-title { font-size:19px; }
-    }
-  </style>
-</head>
-<body>
-  <main id="map" aria-label="מפה אינטראקטיבית של מסלול הטיול"></main>
 
-  <aside id="info-panel" aria-live="polite">
-    <h1 class="panel-title">הטיול בטנזניה ובזנזיבר</h1>
-    <p class="panel-subtitle">לחץ על מספר יום לקבלת מידע על האתר, או על קו כחול לקבלת מידע על מקטע הדרך.</p>
+    const tracks = data.features.filter(function (feature) {
+      return feature.geometry && feature.geometry.type === 'LineString' &&
+        feature.properties && feature.properties.type === 'track';
+    });
+    const sites = data.features.filter(function (feature) {
+      return feature.geometry && feature.geometry.type === 'Point' &&
+        feature.properties && feature.properties.type === 'site';
+    });
 
-    <button type="button" class="guide-reopen-btn" id="guide-reopen-btn">ℹ️ אודות המדריך</button>
+    tracks.forEach(addTrackFeature);
+    sites.forEach(addSiteFeature);
 
-    <section class="guide-card" id="guide-card">
-      <button type="button" class="guide-close-btn" id="guide-close-btn" aria-label="סגור">×</button>
-      <h2>מדריך הטיול: ניר כץ</h2>
-      <p>ניר כץ, יליד 1972, הוא טיילן בנשמה, הפועל מתוך חיבור אמיתי לאנשים ולטבע הפראי.</p>
-      <p>ניר שהה כחמש שנים באפריקה, בסיני ובמזרח הרחוק, ספג תרבויות, נופים וסיפורי חיים, ומקדיש את חייו לעשייה קהילתית וחברתית.</p>
-      <p>בעבר עמד בראש עמותה חברתית ויזם והוביל תוכנית פורצת דרך לבני נוער יוצאי אתיופיה. הוא דובר כשש שפות, ובהן סוואהילי, ערבית ואמהרית באופן שוטף.</p>
-      <blockquote>„החוויה היא מסע חי ועמוק — חיבור בין נופים לסיפורי עם, בין פתגמים לאוכל מסורתי, ובין ההיסטוריה הרחוקה למפגש הקרוב. הרפתקה אמיתית היא כזו שחולקים עם האנשים שאוהבים.”</blockquote>
-    </section>
+    if (boundsGroup.getLayers().length === 0) throw new Error('לא נמצאו שכבות להצגה.');
 
-    <section id="panel-content"><div class="placeholder">טוען את המסלול…</div></section>
+    map.fitBounds(boundsGroup.getBounds(), { padding: [35, 35], maxZoom: 10 });
+    panelElement.innerHTML = '<div class="placeholder">המפה מוכנה.<br>לחץ על מספר יום או על קו כחול.</div>';
+  } catch (error) {
+    console.error(error);
+    showError(error && error.message ? error.message : 'שגיאה לא ידועה.');
+  }
+}
 
-    <div class="legend">
-      <div><span class="legend-dot"></span> מספר יום / אתר</div>
-      <div><span class="legend-line"></span> מקטע דרך</div>
-    </div>
-  </aside>
+map.on('click', resetActiveTrack);
+loadRoute();
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="app.js?v=20260802e"></script>
-</body>
-</html>
+(function setupGuideCard() {
+  const card = document.getElementById('guide-card');
+  const closeBtn = document.getElementById('guide-close-btn');
+  const reopenBtn = document.getElementById('guide-reopen-btn');
+  if (!card || !closeBtn || !reopenBtn) return;
+
+  const STORAGE_KEY = 'guideCardDismissed';
+
+  function closeCard() {
+    card.style.display = 'none';
+    reopenBtn.style.display = 'flex';
+    try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+  }
+
+  function openCard() {
+    card.style.display = 'block';
+    reopenBtn.style.display = 'none';
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  }
+
+  let dismissed = false;
+  try { dismissed = localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
+  if (dismissed) closeCard();
+
+  closeBtn.addEventListener('click', closeCard);
+  reopenBtn.addEventListener('click', openCard);
+})();
