@@ -79,11 +79,38 @@ function buildLinksHtml(properties) {
   if (links.length === 0) return '';
 
   return '<div class="external-links">' + links.map(function (item) {
-    return '<a class="external-link" href="' + escapeHtml(item.url) +
+    const isGpx = /\.gpx(\?.*)?$/i.test(item.url);
+    const cls = isGpx ? 'external-link gpx-link' : 'external-link';
+    return '<a class="' + cls + '" href="' + escapeHtml(item.url) +
       '" target="_blank" rel="noopener noreferrer">' +
       escapeHtml(item.text) + '</a>';
   }).join('') + '</div>';
 }
+
+async function openGpxInline(url) {
+  try {
+    const response = await fetch(url, { cache: 'no-store' });
+    if (!response.ok) throw new Error('שגיאת שרת ' + response.status);
+    const text = await response.text();
+    const blob = new Blob([text], { type: 'application/xml' });
+    const blobUrl = URL.createObjectURL(blob);
+    const win = window.open(blobUrl, '_blank');
+    if (!win) {
+      window.location.href = blobUrl;
+    }
+    setTimeout(function () { URL.revokeObjectURL(blobUrl); }, 60000);
+  } catch (error) {
+    console.error(error);
+    window.open(url, '_blank');
+  }
+}
+
+panelElement.addEventListener('click', function (event) {
+  const link = event.target.closest('a.gpx-link');
+  if (!link) return;
+  event.preventDefault();
+  openGpxInline(link.getAttribute('href'));
+});
 
 function updatePanel(properties) {
   properties = properties || {};
@@ -190,7 +217,7 @@ function addSiteFeature(feature) {
 
 async function loadRoute() {
   try {
-    const response = await fetch('./safari_path.geojson?v=20260716', { cache: 'no-store' });
+    const response = await fetch('./safari_path.geojson?v=20260802', { cache: 'no-store' });
     if (!response.ok) throw new Error('שגיאת שרת ' + response.status + ' בעת טעינת safari_path.geojson');
 
     const data = await response.json();
