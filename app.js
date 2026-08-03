@@ -195,7 +195,7 @@ function addSiteFeature(feature) {
 
 async function loadRoute() {
   try {
-    const response = await fetch('./safari_path.geojson?v=20260802e', { cache: 'no-store' });
+    const response = await fetch('./safari_path.geojson?v=20260803', { cache: 'no-store' });
     if (!response.ok) throw new Error('שגיאת שרת ' + response.status + ' בעת טעינת safari_path.geojson');
 
     const data = await response.json();
@@ -254,4 +254,38 @@ loadRoute();
 
   closeBtn.addEventListener('click', closeCard);
   reopenBtn.addEventListener('click', openCard);
+})();
+
+(function setupInfoPanel() {
+  const panel = document.getElementById('info-panel');
+  const closeBtn = document.getElementById('panel-close-btn');
+  const reopenBtn = document.getElementById('panel-reopen-btn');
+  if (!panel || !closeBtn || !reopenBtn) return;
+
+  const STORAGE_KEY = 'infoPanelClosed';
+
+  function refreshMap() {
+    setTimeout(function () { map.invalidateSize(); }, 60);
+  }
+
+  function closePanel() {
+    panel.classList.add('panel-hidden');
+    reopenBtn.classList.add('visible');
+    try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+    refreshMap();
+  }
+
+  function openPanel() {
+    panel.classList.remove('panel-hidden');
+    reopenBtn.classList.remove('visible');
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    refreshMap();
+  }
+
+  let closed = false;
+  try { closed = localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
+  if (closed) closePanel();
+
+  closeBtn.addEventListener('click', closePanel);
+  reopenBtn.addEventListener('click', openPanel);
 })();
